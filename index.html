@@ -26,7 +26,10 @@
             </div>
         </nav>
 
-        <header class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
+        <!-- Header diatur flex-col-reverse agar profil (kanan) di atas saat mobile -->
+        <header class="flex flex-col-reverse md:grid md:grid-cols-12 gap-6 md:gap-8">
+            
+            <!-- Bagian Kiri -->
             <div class="md:col-span-7 space-y-6">
                 <h2 class="text-5xl md:text-8xl font-serif leading-[0.9]">Hello,<br>I'm Will !</h2>
                 <p class="text-sm md:text-base leading-relaxed text-gray-800 max-w-lg">Graphic Designer otodidak & Digital Web Management enthusiast.</p>
@@ -61,6 +64,7 @@
                 </div>
             </div>
             
+            <!-- Bagian Kanan (Profil) -->
             <div class="md:col-span-5 bg-[#2b3934] text-white p-6 rounded-[1.5rem] shadow-lg h-fit">
                 <div class="w-full aspect-square md:aspect-auto md:h-64 mb-6 overflow-hidden rounded-[1rem]">
                     <img src="https://i.ibb.co.com/CKpQhNrQ/1778070770943.png" alt="Foto Profil" class="w-full h-full object-cover">
