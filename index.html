@@ -209,7 +209,6 @@
             object-fit: contain;
             margin-right: 0.5rem;
         }
-        /* Responsive modal pada mobile */
         @media (max-width: 640px) {
             .modal-content {
                 padding: 1rem;
@@ -319,7 +318,7 @@
         </div>
     </main>
 
-    <!-- MODAL MARKET PRICE dengan toggle global USD/IDR -->
+    <!-- MODAL MARKET PRICE (sama seperti sebelumnya, sudah rapi) -->
     <div id="modal-crypto" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
         <div class="bg-white rounded-[2rem] p-4 sm:p-6 md:p-8 w-full max-w-3xl relative shadow-2xl max-h-[90vh] overflow-y-auto modal-content">
             <button onclick="toggleModal('modal-crypto')" class="absolute top-4 right-4 text-gray-400 hover:text-black"><i class="fas fa-times text-xl"></i></button>
@@ -328,14 +327,12 @@
                     <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center"><i class="fas fa-chart-line text-[#f7a21b] text-xl"></i></div>
                     <div><h3 class="font-serif text-xl sm:text-2xl text-[#2b3934] font-bold">Market Price</h3><p class="text-[10px] sm:text-[11px] text-gray-400">Update otomatis setiap 8 detik</p></div>
                 </div>
-                <!-- Toggle Global USD/IDR -->
                 <div id="global-toggle" class="toggle-switch self-start sm:self-auto">
                     <span data-mode="usd" class="toggle-option active">USD</span>
                     <span data-mode="idr" class="toggle-option">IDR</span>
                 </div>
             </div>
             
-            <!-- Bitcoin Card (tanpa toggle sendiri) -->
             <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-4 mb-4 shadow-inner border border-amber-100">
                 <div class="flex items-center gap-2"><img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=026" class="coin-logo" alt="BTC"><span class="font-bold text-base sm:text-lg">Bitcoin (BTC)</span></div>
                 <div class="flex items-baseline flex-wrap justify-between mt-1">
@@ -348,7 +345,6 @@
                 </div>
             </div>
             
-            <!-- Grid 9 aset crypto lainnya -->
             <div class="crypto-grid" id="crypto-grid-container">
                 <div class="col-span-full text-center py-10 text-gray-400"><i class="fas fa-spinner animate-spin mr-2"></i> Memuat data crypto...</div>
             </div>
@@ -357,11 +353,40 @@
         </div>
     </div>
 
-    <!-- MODAL BERITA & STATS (tetap sama, tidak diubah) -->
+    <!-- MODAL VIDEO (DIPERBAIKI: logo YouTube dan instruksi fullscreen ditampilkan) -->
+    <div id="modal-video" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-2xl relative max-h-[90vh] overflow-y-auto shadow-2xl">
+            <button onclick="closeModal()" class="absolute top-5 right-5 text-gray-400 hover:text-black transition"><i class="fas fa-times text-2xl"></i></button>
+            <div id="video-selection">
+                <h3 class="font-serif text-2xl sm:text-3xl mb-6 text-[#2b3934]">Pilih Modul Pembelajaran</h3>
+                <div class="space-y-4">
+                    <button onclick="playVideo('x096v5S0aAQ')" class="group flex items-center justify-between w-full p-4 sm:p-5 bg-white border border-gray-100 rounded-2xl shadow-sm hover:border-[#f7a21b] hover:shadow-md transition-all duration-300">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-red-600 text-2xl sm:text-3xl">
+                                <i class="fab fa-youtube"></i>
+                            </div>
+                            <span class="font-semibold text-gray-700 group-hover:text-[#2b3934] text-sm sm:text-base">Konversi Gambar ke HTML</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-300 group-hover:text-[#f7a21b] transition"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="video-player" class="hidden">
+                <button onclick="backToSelection()" class="mb-4 text-sm text-[#2b3934] font-bold flex items-center hover:opacity-70 transition">
+                    <i class="fas fa-arrow-left mr-2"></i> Kembali ke Menu Utama
+                </button>
+                <p class="text-xs text-gray-500 mb-3 italic">Untuk menonton lebih jelas, gunakan tombol fullscreen (⛶) di pojok kanan bawah video.</p>
+                <div class="aspect-video w-full bg-black rounded-2xl overflow-hidden shadow-xl">
+                    <iframe id="iframe-video" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL BERITA & STATS (tetap) -->
     <div id="modal-news" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50"><div class="bg-white rounded-[2rem] p-6 md:p-8 w-full max-w-3xl relative shadow-2xl max-h-[90vh] overflow-y-auto"><button onclick="closeNewsModal()" class="absolute top-6 right-6 text-gray-400 hover:text-black"><i class="fas fa-times text-xl"></i></button><div class="flex items-center gap-3 mb-5"><div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center"><i class="fas fa-newspaper text-[#1e3a5f] text-xl"></i></div><div><h3 class="font-serif text-2xl text-[#2b3934] font-bold">Berita Crypto Terkini</h3><p class="text-[11px] text-gray-400">Auto update 30 menit | Sumber: CoinDesk</p></div></div><div id="news-container" class="news-list space-y-4"><div class="text-center text-gray-400 py-10"><i class="fas fa-spinner animate-spin mr-2"></i> Memuat berita...</div></div><div class="mt-5 text-[10px] text-center text-gray-400 border-t pt-3"><i class="fas fa-external-link-alt"></i> Klik judul untuk baca lengkap</div></div></div>
     <div id="modal-stats" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50"><div class="bg-white rounded-[2rem] p-6 md:p-8 w-full max-w-lg relative shadow-2xl"><button onclick="closeStatsModal()" class="absolute top-6 right-6 text-gray-400 hover:text-black"><i class="fas fa-times text-xl"></i></button><div class="flex items-center gap-3 mb-5"><div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center"><i class="fas fa-chart-simple text-[#4a1d6d] text-xl"></i></div><div><h3 class="font-serif text-2xl text-[#2b3934] font-bold">Crypto Market Stats</h3><p class="text-[11px] text-gray-400">Update 10 detik</p></div></div><div class="space-y-4 text-center"><div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-5"><p class="text-sm text-gray-500">Total Market Cap</p><p id="total-market-cap" class="text-2xl font-bold">$ —</p></div><div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-5"><p class="text-sm text-gray-500">24h Volume</p><p id="total-volume" class="text-2xl font-bold">$ —</p></div><div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-5"><p class="text-sm text-gray-500">BTC Dominance</p><p id="btc-dominance" class="text-2xl font-bold">—%</p></div></div></div></div>
 
-    <div id="modal-video" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50"><div class="bg-white rounded-3xl p-8 w-full max-w-2xl relative max-h-[90vh] overflow-y-auto"><button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-black"><i class="fas fa-times text-2xl"></i></button><div id="video-selection"><h3 class="font-serif text-3xl mb-8">Pilih Modul</h3><div class="space-y-4"><button onclick="playVideo('x096v5S0aAQ')" class="group w-full p-5 bg-white border rounded-2xl text-left hover:border-[#f7a21b]">Konversi Gambar ke HTML</button></div></div><div id="video-player" class="hidden"><button onclick="backToSelection()" class="mb-3 text-sm font-bold">← Kembali</button><div class="aspect-video"><iframe id="iframe-video" class="w-full h-full" frameborder="0" allowfullscreen></iframe></div></div></div></div>
     <div id="modal-anonim" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50"><div class="bg-white rounded-2xl p-6 max-w-md w-full relative"><button onclick="closeAnonimModal()" class="absolute top-5 right-5 text-gray-400"><i class="fas fa-times"></i></button><div class="flex items-center gap-3"><i class="fas fa-user-secret text-2xl text-[#f7a21b]"></i><h3 class="text-2xl font-serif">Pesan Anonim</h3></div><form onsubmit="sendTelegramMessageModal(event)" class="mt-4"><textarea id="anonim-message-modal" rows="4" maxlength="500" class="w-full border rounded-xl p-3" placeholder="Tulis pesan..."></textarea><div class="text-right text-xs text-gray-400 mt-1"><span id="char-count-modal">0/500</span></div><div id="submit-status-modal" class="hidden my-2 text-sm"></div><button type="submit" id="btn-send-modal" class="w-full bg-[#2b3934] text-white py-3 rounded-xl mt-2 font-semibold">Kirim</button></form></div></div>
 
     <script>
@@ -392,14 +417,11 @@
         cryptoMainBtn.addEventListener('click', toggleDropdown);
         document.addEventListener('click', function(e) { if (!cryptoMainBtn.contains(e.target) && !cryptoDropdown.contains(e.target)) closeDropdown(); });
 
-        // ========== MARKET PRICE dengan GLOBAL TOGGLE ==========
-        let globalMode = "usd"; // 'usd' or 'idr'
+        // ========== MARKET PRICE GLOBAL TOGGLE ==========
+        let globalMode = "usd";
         let marketInterval = null;
+        let allPrices = {};
         
-        // Data untuk semua aset (termasuk BTC)
-        let allPrices = {}; // key: id, value: { usd, idr, change }
-        
-        // Daftar aset (ID CoinGecko, nama, simbol, logo URL)
         const assets = [
             { id: "ethereum", name: "Ethereum", symbol: "ETH", logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=026" },
             { id: "ripple", name: "XRP", symbol: "XRP", logo: "https://cryptologos.cc/logos/xrp-xrp-logo.png?v=026" },
@@ -412,9 +434,7 @@
             { id: "polygon", name: "Polygon", symbol: "MATIC", logo: "https://cryptologos.cc/logos/polygon-matic-logo.png?v=026" }
         ];
         
-        // Fungsi update tampilan semua card (BTC dan grid) berdasarkan globalMode
         function renderAllPrices() {
-            // Update BTC card
             const btcData = allPrices['bitcoin'];
             if (btcData) {
                 const price = globalMode === "usd" ? btcData.usd : btcData.idr;
@@ -446,7 +466,6 @@
                 }
             }
             
-            // Update grid altcoin
             const container = document.getElementById('crypto-grid-container');
             if (!container) return;
             if (Object.keys(allPrices).length === 0) {
@@ -471,11 +490,9 @@
                 const absoluteHtml = changePercent !== 0 ? 
                     (isPositive ? `<span class="positive">(▲ ${absFormatted})</span>` : `<span class="negative">(▼ ${absFormatted})</span>`) 
                     : '';
-                
                 const priceDisplay = (globalMode === "usd") 
                     ? `$${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
                     : `Rp ${price.toLocaleString('id-ID')}`;
-                
                 html += `
                     <div class="crypto-card">
                         <div class="flex items-center gap-2 mb-1">
@@ -504,7 +521,6 @@
                 const res = await fetch(url);
                 const data = await res.json();
                 if (data) {
-                    // Simpan semua data ke allPrices
                     for (let id of ['bitcoin', ...assets.map(a => a.id)]) {
                         if (data[id]) {
                             allPrices[id] = {
@@ -527,7 +543,6 @@
         function startMarketUpdater() { if(marketInterval) clearInterval(marketInterval); updateAllPrices(); marketInterval = setInterval(updateAllPrices, 8000); }
         function stopMarketUpdater() { if(marketInterval) clearInterval(marketInterval); marketInterval = null; }
         
-        // Global toggle initialization
         function initGlobalToggle() {
             const toggleDiv = document.getElementById('global-toggle');
             if (!toggleDiv) return;
@@ -538,14 +553,14 @@
                     globalMode = mode;
                     options.forEach(o => o.classList.remove('active'));
                     opt.classList.add('active');
-                    renderAllPrices(); // refresh semua tampilan dengan mode baru
+                    renderAllPrices();
                 });
             });
         }
         document.addEventListener('DOMContentLoaded', initGlobalToggle);
         setTimeout(initGlobalToggle, 500);
         
-        // ========== BERITA CRYPTO (sama) ==========
+        // ========== BERITA CRYPTO ==========
         let newsCache = null, lastFetchTime = 0, newsAutoInterval = null;
         async function fetchCryptoNews() {
             const container = document.getElementById('news-container');
@@ -619,9 +634,22 @@
             finally { btn.disabled=false; btn.innerHTML = `<i class="fas fa-paper-plane text-[10px]"></i> Kirim Pesan`; }
         }
         
-        function playVideo(id) { document.getElementById('video-selection').classList.add('hidden'); document.getElementById('video-player').classList.remove('hidden'); document.getElementById('iframe-video').src = `https://www.youtube.com/embed/${id}?autoplay=1`; }
-        function backToSelection() { document.getElementById('video-selection').classList.remove('hidden'); document.getElementById('video-player').classList.add('hidden'); document.getElementById('iframe-video').src = ''; }
-        function closeModal() { backToSelection(); toggleModal('modal-video'); document.body.style.overflow = ''; }
+        // ========== VIDEO MODUL ==========
+        function playVideo(id) { 
+            document.getElementById('video-selection').classList.add('hidden'); 
+            document.getElementById('video-player').classList.remove('hidden'); 
+            document.getElementById('iframe-video').src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`; 
+        }
+        function backToSelection() { 
+            document.getElementById('video-selection').classList.remove('hidden'); 
+            document.getElementById('video-player').classList.add('hidden'); 
+            document.getElementById('iframe-video').src = ''; 
+        }
+        function closeModal() { 
+            backToSelection(); 
+            toggleModal('modal-video'); 
+            document.body.style.overflow = ''; 
+        }
         
         document.querySelectorAll('.fixed.inset-0.bg-black\\/70').forEach(m => m.addEventListener('click', function(e){ if(e.target===m) { if(m.id==='modal-anonim') closeAnonimModal(); else if(m.id==='modal-video') closeModal(); else if(m.id==='modal-crypto') { toggleModal('modal-crypto'); stopMarketUpdater(); document.body.style.overflow=''; } else if(m.id==='modal-news') closeNewsModal(); else if(m.id==='modal-stats') closeStatsModal(); } }));
     </script>
