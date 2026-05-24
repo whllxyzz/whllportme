@@ -8,215 +8,51 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
+        /* semua style sama seperti versi sebelumnya yang sudah responsif, tidak diubah */
         @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600;700&display=swap');
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: radial-gradient(circle at 100% 0%, #edeae5, #dcdad4);
-            min-height: 100vh;
-            color: #1a2e23; 
-            overflow-x: hidden; 
-        }
+        body { font-family: 'Inter', sans-serif; background: radial-gradient(circle at 100% 0%, #edeae5, #dcdad4); min-height: 100vh; color: #1a2e23; overflow-x: hidden; }
         .font-serif { font-family: 'DM Serif Display', serif; }
         .hover-lift { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
-        
-        @keyframes pulse-beat {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.15); opacity: 0.8; }
-        }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); }
+        @keyframes pulse-beat { 0%,100%{transform:scale(1);opacity:1;} 50%{transform:scale(1.15);opacity:0.8;} }
         .animate-beat { animation: pulse-beat 1.5s ease-in-out infinite; }
-        
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        @keyframes subtle-pulse {
-            0% { opacity: 0.6; transform: scale(1); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        .price-update {
-            animation: subtle-pulse 0.2s ease-in-out;
-        }
-
+        .slide img { width:100%; height:100%; object-fit:cover; display:block; }
+        @keyframes subtle-pulse { 0%{opacity:0.6;transform:scale(1);} 100%{opacity:1;transform:scale(1);} }
+        .price-update { animation: subtle-pulse 0.2s ease-in-out; }
         .price-up { color: #10b981; }
         .price-down { color: #ef4444; }
         .price-neutral { color: #4b5563; }
-        .arrow-up { color: #10b981; margin-left: 6px; font-size: 0.8rem; }
-        .arrow-down { color: #ef4444; margin-left: 6px; font-size: 0.8rem; }
-
-        .news-list, .stats-list {
-            max-height: 460px;
-            overflow-y: auto;
-            scrollbar-width: thin;
-        }
-        .news-list::-webkit-scrollbar, .stats-list::-webkit-scrollbar { width: 4px; }
-        .news-list::-webkit-scrollbar-track, .stats-list::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-        .news-list::-webkit-scrollbar-thumb, .stats-list::-webkit-scrollbar-thumb { background: #f7a21b; border-radius: 10px; }
-
-        .btn-uniform {
-            padding: 0.625rem 1rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border-radius: 0.75rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-        .btn-primary {
-            background: #f7a21b;
-            color: white;
-        }
-        .btn-primary:hover {
-            background: #e08f12;
-            transform: translateY(-2px);
-        }
-        .btn-secondary {
-            background: #2b3934;
-            color: white;
-        }
-        .btn-secondary:hover {
-            background: #1f2c27;
-            transform: translateY(-2px);
-        }
-        .button-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            align-items: center;
-        }
-        .crypto-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            border-radius: 1rem;
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-            padding: 0.5rem;
-            min-width: 180px;
-            z-index: 50;
-            margin-top: 0.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .crypto-dropdown button {
-            width: 100%;
-            text-align: left;
-            padding: 0.75rem 1rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            font-size: 0.875rem;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            background: transparent;
-            color: #1a2e23;
-        }
-        .crypto-dropdown button:hover {
-            background-color: #f3f4f6;
-            transform: translateX(4px);
-        }
-        .sponsor-badge {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(2px);
-            border-radius: 100px;
-            padding: 0.25rem 1rem 0.25rem 0.75rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
-            font-size: 0.75rem;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-        }
-        .sponsor-badge:hover {
-            background: white;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-            border-color: rgba(0,0,0,0.1);
-        }
-        .sponsor-badge img {
-            height: 18px;
-            width: auto;
-        }
-        .percentage-change {
-            font-size: 0.65rem;
-            font-weight: 500;
-            margin-left: 0.25rem;
-        }
-        .absolute-change {
-            font-size: 0.6rem;
-            font-weight: 500;
-            margin-left: 0.25rem;
-        }
-        .positive { color: #10b981; }
-        .negative { color: #ef4444; }
-        .toggle-switch {
-            background: #f3f4f6;
-            border-radius: 2rem;
-            padding: 0.2rem;
-            display: inline-flex;
-            cursor: pointer;
-            border: 1px solid #e5e7eb;
-        }
-        .toggle-option {
-            padding: 0.25rem 0.75rem;
-            font-size: 0.7rem;
-            font-weight: 600;
-            border-radius: 1.5rem;
-            transition: all 0.2s;
-        }
-        .toggle-option.active {
-            background: #f7a21b;
-            color: white;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-        }
-        .crypto-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-            max-height: 460px;
-            overflow-y: auto;
-            padding-right: 0.5rem;
-        }
-        @media (min-width: 640px) {
-            .crypto-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        .crypto-card {
-            background: white;
-            border-radius: 1rem;
-            padding: 0.75rem;
-            transition: all 0.2s;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        .crypto-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            border-color: #f7a21b;
-        }
-        .coin-logo {
-            width: 24px;
-            height: 24px;
-            object-fit: contain;
-            margin-right: 0.5rem;
-        }
-        @media (max-width: 640px) {
-            .modal-content {
-                padding: 1rem;
-            }
-            .crypto-card {
-                padding: 0.5rem;
-            }
-        }
+        .arrow-up { color: #10b981; margin-left:6px; font-size:0.8rem; }
+        .arrow-down { color: #ef4444; margin-left:6px; font-size:0.8rem; }
+        .news-list, .stats-list { max-height:460px; overflow-y:auto; scrollbar-width:thin; }
+        .news-list::-webkit-scrollbar, .stats-list::-webkit-scrollbar { width:4px; }
+        .news-list::-webkit-scrollbar-track, .stats-list::-webkit-scrollbar-track { background:#f1f1f1; border-radius:10px; }
+        .news-list::-webkit-scrollbar-thumb, .stats-list::-webkit-scrollbar-thumb { background:#f7a21b; border-radius:10px; }
+        .btn-uniform { padding:0.625rem 1rem; font-size:0.8rem; font-weight:600; border-radius:0.75rem; display:inline-flex; align-items:center; gap:0.5rem; transition:all 0.2s; white-space:nowrap; }
+        .btn-primary { background:#f7a21b; color:white; }
+        .btn-primary:hover { background:#e08f12; transform:translateY(-2px); }
+        .btn-secondary { background:#2b3934; color:white; }
+        .btn-secondary:hover { background:#1f2c27; transform:translateY(-2px); }
+        .button-group { display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center; }
+        .crypto-dropdown { position:absolute; top:100%; left:0; background:white; border-radius:1rem; box-shadow:0 20px 25px -5px rgba(0,0,0,0.1); padding:0.5rem; min-width:180px; z-index:50; margin-top:0.5rem; display:flex; flex-direction:column; gap:0.5rem; }
+        .crypto-dropdown button { width:100%; text-align:left; padding:0.75rem 1rem; border-radius:0.75rem; font-weight:600; font-size:0.875rem; transition:all 0.2s; display:flex; align-items:center; gap:0.75rem; background:transparent; color:#1a2e23; }
+        .crypto-dropdown button:hover { background-color:#f3f4f6; transform:translateX(4px); }
+        .sponsor-badge { background:rgba(255,255,255,0.85); backdrop-filter:blur(2px); border-radius:100px; padding:0.25rem 1rem 0.25rem 0.75rem; display:inline-flex; align-items:center; gap:0.5rem; font-weight:500; font-size:0.75rem; transition:all 0.2s ease; border:1px solid rgba(0,0,0,0.05); box-shadow:0 1px 2px rgba(0,0,0,0.05); }
+        .sponsor-badge:hover { background:white; transform:translateY(-1px); box-shadow:0 4px 10px rgba(0,0,0,0.08); border-color:rgba(0,0,0,0.1); }
+        .sponsor-badge img { height:18px; width:auto; }
+        .percentage-change { font-size:0.65rem; font-weight:500; margin-left:0.25rem; }
+        .absolute-change { font-size:0.6rem; font-weight:500; margin-left:0.25rem; }
+        .positive { color:#10b981; }
+        .negative { color:#ef4444; }
+        .toggle-switch { background:#f3f4f6; border-radius:2rem; padding:0.2rem; display:inline-flex; cursor:pointer; border:1px solid #e5e7eb; }
+        .toggle-option { padding:0.25rem 0.75rem; font-size:0.7rem; font-weight:600; border-radius:1.5rem; transition:all 0.2s; }
+        .toggle-option.active { background:#f7a21b; color:white; box-shadow:0 1px 2px rgba(0,0,0,0.1); }
+        .crypto-grid { display:grid; grid-template-columns:1fr; gap:1rem; max-height:460px; overflow-y:auto; padding-right:0.5rem; }
+        @media (min-width:640px) { .crypto-grid { grid-template-columns:repeat(2,1fr); } }
+        .crypto-card { background:white; border-radius:1rem; padding:0.75rem; transition:all 0.2s; border:1px solid rgba(0,0,0,0.05); }
+        .crypto-card:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,0.05); border-color:#f7a21b; }
+        .coin-logo { width:24px; height:24px; object-fit:contain; margin-right:0.5rem; }
+        @media (max-width:640px) { .modal-content { padding:1rem; } .crypto-card { padding:0.5rem; } }
     </style>
 </head>
 <body class="p-4 md:p-12">
@@ -268,20 +104,12 @@
                 </div>
 
                 <a href="https://maps.app.goo.gl/2P8A5kXNmCTnqjm76" target="_blank" class="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-black/5 hover:border-[#f7a21b] transition">
-                    <div class="w-12 h-12 flex-shrink-0">
-                        <img src="https://i.ibb.co.com/yczZpQpb/pp-smkn.jpg" alt="Logo Sekolah" class="w-full h-full object-cover rounded-full">
-                    </div>
-                    <div>
-                        <div class="font-bold text-sm text-[#2b3934]">Lokasi Sekolah Saya</div>
-                        <div class="text-[10px] text-gray-500 uppercase tracking-wider">SMKN 2 TEMBILAHAN | STM</div>
-                    </div>
+                    <div class="w-12 h-12 flex-shrink-0"><img src="https://i.ibb.co.com/yczZpQpb/pp-smkn.jpg" class="w-full h-full object-cover rounded-full"></div>
+                    <div><div class="font-bold text-sm text-[#2b3934]">Lokasi Sekolah Saya</div><div class="text-[10px] text-gray-500 uppercase tracking-wider">SMKN 2 TEMBILAHAN | STM</div></div>
                 </a>
 
                 <div class="w-full bg-white p-6 rounded-2xl shadow-sm border border-black/5 space-y-4">
-                    <div class="flex items-center gap-3">
-                        <div class="animate-beat text-green-500"><i class="fab fa-spotify text-2xl"></i></div>
-                        <h3 class="font-bold text-[#2b3934]">My Music Vibes</h3>
-                    </div>
+                    <div class="flex items-center gap-3"><div class="animate-beat text-green-500"><i class="fab fa-spotify text-2xl"></i></div><h3 class="font-bold text-[#2b3934]">My Music Vibes</h3></div>
                     <iframe src="https://open.spotify.com/embed/track/2LBqCSwhJGcFQeTHMVGwy3" class="w-full h-20" frameborder="0" allow="encrypted-media"></iframe>
                     <iframe src="https://open.spotify.com/embed/track/7DY756WOLyOz2Xnhw4EFiC" class="w-full h-20" frameborder="0" allow="encrypted-media"></iframe>
                     <iframe src="https://open.spotify.com/embed/track/37F0uwRSrdzkBiuj0D5UHI" class="w-full h-20" frameborder="0" allow="encrypted-media"></iframe>
@@ -307,53 +135,35 @@
             </div>
         </header>
 
-        <!-- Sponsor -->
         <div class="mt-12 pt-6 border-t border-black/10 text-center">
             <div class="flex flex-wrap items-center justify-center gap-3 text-xs text-gray-500">
                 <span class="font-medium">✨ Web ini disponsori oleh</span>
-                <a href="https://www.google.com" target="_blank" class="sponsor-badge group"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="transition-transform group-hover:scale-105"><span>Google</span></a>
+                <a href="https://www.google.com" target="_blank" class="sponsor-badge group"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google"><span>Google</span></a>
                 <span class="text-gray-400">dan</span>
-                <a href="https://github.com" target="_blank" class="sponsor-badge group"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" class="transition-transform group-hover:scale-105"><span>GitHub</span></a>
+                <a href="https://github.com" target="_blank" class="sponsor-badge group"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub"><span>GitHub</span></a>
             </div>
         </div>
     </main>
 
-    <!-- MODAL MARKET PRICE (sama seperti sebelumnya, sudah rapi) -->
+    <!-- MODAL MARKET PRICE (dengan format IDR bulat tanpa desimal) -->
     <div id="modal-crypto" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
         <div class="bg-white rounded-[2rem] p-4 sm:p-6 md:p-8 w-full max-w-3xl relative shadow-2xl max-h-[90vh] overflow-y-auto modal-content">
             <button onclick="toggleModal('modal-crypto')" class="absolute top-4 right-4 text-gray-400 hover:text-black"><i class="fas fa-times text-xl"></i></button>
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center"><i class="fas fa-chart-line text-[#f7a21b] text-xl"></i></div>
-                    <div><h3 class="font-serif text-xl sm:text-2xl text-[#2b3934] font-bold">Market Price</h3><p class="text-[10px] sm:text-[11px] text-gray-400">Update otomatis setiap 8 detik</p></div>
-                </div>
-                <div id="global-toggle" class="toggle-switch self-start sm:self-auto">
-                    <span data-mode="usd" class="toggle-option active">USD</span>
-                    <span data-mode="idr" class="toggle-option">IDR</span>
-                </div>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center"><i class="fas fa-chart-line text-[#f7a21b] text-xl"></i></div><div><h3 class="font-serif text-xl sm:text-2xl text-[#2b3934] font-bold">Market Price</h3><p class="text-[10px] sm:text-[11px] text-gray-400">Update otomatis setiap 8 detik</p></div></div>
+                <div id="global-toggle" class="toggle-switch self-start sm:self-auto"><span data-mode="usd" class="toggle-option active">USD</span><span data-mode="idr" class="toggle-option">IDR</span></div>
             </div>
-            
             <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-4 mb-4 shadow-inner border border-amber-100">
                 <div class="flex items-center gap-2"><img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=026" class="coin-logo" alt="BTC"><span class="font-bold text-base sm:text-lg">Bitcoin (BTC)</span></div>
-                <div class="flex items-baseline flex-wrap justify-between mt-1">
-                    <span id="btc-price-display" class="text-xl sm:text-2xl font-bold font-mono">$ —,---</span>
-                    <span id="btc-arrow" class="text-sm"></span>
-                </div>
-                <div class="flex flex-wrap items-baseline gap-x-2 mt-1">
-                    <span id="btc-change-percent" class="percentage-change"></span>
-                    <span id="btc-absolute-change" class="absolute-change"></span>
-                </div>
+                <div class="flex items-baseline flex-wrap justify-between mt-1"><span id="btc-price-display" class="text-xl sm:text-2xl font-bold font-mono">$ —,---</span><span id="btc-arrow" class="text-sm"></span></div>
+                <div class="flex flex-wrap items-baseline gap-x-2 mt-1"><span id="btc-change-percent" class="percentage-change"></span><span id="btc-absolute-change" class="absolute-change"></span></div>
             </div>
-            
-            <div class="crypto-grid" id="crypto-grid-container">
-                <div class="col-span-full text-center py-10 text-gray-400"><i class="fas fa-spinner animate-spin mr-2"></i> Memuat data crypto...</div>
-            </div>
-            
+            <div class="crypto-grid" id="crypto-grid-container"><div class="col-span-full text-center py-10 text-gray-400"><i class="fas fa-spinner animate-spin mr-2"></i> Memuat data crypto...</div></div>
             <div class="mt-4 text-[10px] text-center text-gray-400"><i class="fas fa-clock"></i> <span id="last-updated-market">Mengambil data...</span></div>
         </div>
     </div>
 
-    <!-- MODAL VIDEO (DIPERBAIKI: logo YouTube dan instruksi fullscreen ditampilkan) -->
+    <!-- MODAL VIDEO (dengan logo YouTube dan instruksi fullscreen) -->
     <div id="modal-video" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
         <div class="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-2xl relative max-h-[90vh] overflow-y-auto shadow-2xl">
             <button onclick="closeModal()" class="absolute top-5 right-5 text-gray-400 hover:text-black transition"><i class="fas fa-times text-2xl"></i></button>
@@ -361,24 +171,15 @@
                 <h3 class="font-serif text-2xl sm:text-3xl mb-6 text-[#2b3934]">Pilih Modul Pembelajaran</h3>
                 <div class="space-y-4">
                     <button onclick="playVideo('x096v5S0aAQ')" class="group flex items-center justify-between w-full p-4 sm:p-5 bg-white border border-gray-100 rounded-2xl shadow-sm hover:border-[#f7a21b] hover:shadow-md transition-all duration-300">
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-red-600 text-2xl sm:text-3xl">
-                                <i class="fab fa-youtube"></i>
-                            </div>
-                            <span class="font-semibold text-gray-700 group-hover:text-[#2b3934] text-sm sm:text-base">Konversi Gambar ke HTML</span>
-                        </div>
+                        <div class="flex items-center gap-4"><div class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-red-600 text-2xl sm:text-3xl"><i class="fab fa-youtube"></i></div><span class="font-semibold text-gray-700 group-hover:text-[#2b3934] text-sm sm:text-base">Konversi Gambar ke HTML</span></div>
                         <i class="fas fa-chevron-right text-gray-300 group-hover:text-[#f7a21b] transition"></i>
                     </button>
                 </div>
             </div>
             <div id="video-player" class="hidden">
-                <button onclick="backToSelection()" class="mb-4 text-sm text-[#2b3934] font-bold flex items-center hover:opacity-70 transition">
-                    <i class="fas fa-arrow-left mr-2"></i> Kembali ke Menu Utama
-                </button>
+                <button onclick="backToSelection()" class="mb-4 text-sm text-[#2b3934] font-bold flex items-center hover:opacity-70 transition"><i class="fas fa-arrow-left mr-2"></i> Kembali ke Menu Utama</button>
                 <p class="text-xs text-gray-500 mb-3 italic">Untuk menonton lebih jelas, gunakan tombol fullscreen (⛶) di pojok kanan bawah video.</p>
-                <div class="aspect-video w-full bg-black rounded-2xl overflow-hidden shadow-xl">
-                    <iframe id="iframe-video" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                </div>
+                <div class="aspect-video w-full bg-black rounded-2xl overflow-hidden shadow-xl"><iframe id="iframe-video" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
             </div>
         </div>
     </div>
@@ -417,7 +218,7 @@
         cryptoMainBtn.addEventListener('click', toggleDropdown);
         document.addEventListener('click', function(e) { if (!cryptoMainBtn.contains(e.target) && !cryptoDropdown.contains(e.target)) closeDropdown(); });
 
-        // ========== MARKET PRICE GLOBAL TOGGLE ==========
+        // ========== MARKET PRICE GLOBAL TOGGLE dengan format IDR bulat ==========
         let globalMode = "usd";
         let marketInterval = null;
         let allPrices = {};
@@ -449,7 +250,8 @@
                     if (globalMode === "usd") {
                         priceElem.innerText = `${currencySymbol} ${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
                     } else {
-                        priceElem.innerText = `${currencySymbol} ${price.toLocaleString('id-ID')}`;
+                        // IDR dibulatkan, tanpa desimal
+                        priceElem.innerText = `${currencySymbol} ${Math.round(price).toLocaleString('id-ID')}`;
                     }
                 }
                 if (changePercent !== 0) {
@@ -458,7 +260,9 @@
                     const isPositive = changePercent >= 0;
                     changePercentElem.innerHTML = isPositive ? `<span class="positive"><i class="fas fa-arrow-up"></i> +${changePercent.toFixed(2)}% (24h)</span>` : `<span class="negative"><i class="fas fa-arrow-down"></i> ${changePercent.toFixed(2)}% (24h)</span>`;
                     const absValue = Math.abs(absoluteChange);
-                    const absFormatted = (globalMode === "usd") ? `$${absValue.toFixed(2)}` : `Rp ${absValue.toLocaleString('id-ID')}`;
+                    const absFormatted = (globalMode === "usd") 
+                        ? `$${absValue.toFixed(2)}` 
+                        : `Rp ${Math.round(absValue).toLocaleString('id-ID')}`;
                     absoluteChangeElem.innerHTML = isPositive ? `<span class="positive">(▲ ${absFormatted})</span>` : `<span class="negative">(▼ ${absFormatted})</span>`;
                 } else {
                     changePercentElem.innerHTML = '<span class="text-gray-400">—% (24h)</span>';
@@ -486,28 +290,20 @@
                     (isPositive ? `<span class="positive"><i class="fas fa-arrow-up"></i> +${percentFormatted}%</span>` : `<span class="negative"><i class="fas fa-arrow-down"></i> ${percentFormatted}%</span>`) 
                     : '<span class="text-gray-400">—%</span>';
                 const absValue = Math.abs(absoluteChange);
-                const absFormatted = (globalMode === "usd") ? `$${absValue.toFixed(2)}` : `Rp ${absValue.toLocaleString('id-ID')}`;
+                const absFormatted = (globalMode === "usd") 
+                    ? `$${absValue.toFixed(2)}` 
+                    : `Rp ${Math.round(absValue).toLocaleString('id-ID')}`;
                 const absoluteHtml = changePercent !== 0 ? 
                     (isPositive ? `<span class="positive">(▲ ${absFormatted})</span>` : `<span class="negative">(▼ ${absFormatted})</span>`) 
                     : '';
                 const priceDisplay = (globalMode === "usd") 
                     ? `$${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-                    : `Rp ${price.toLocaleString('id-ID')}`;
+                    : `Rp ${Math.round(price).toLocaleString('id-ID')}`;
                 html += `
                     <div class="crypto-card">
-                        <div class="flex items-center gap-2 mb-1">
-                            <img src="${asset.logo}" class="coin-logo" alt="${asset.symbol}" onerror="this.src='https://cryptologos.cc/logos/placeholder.png'">
-                            <span class="font-bold text-sm">${asset.name}</span>
-                            <span class="text-xs text-gray-400">${asset.symbol}</span>
-                        </div>
-                        <div class="flex items-baseline justify-between flex-wrap">
-                            <span class="text-base sm:text-lg font-bold font-mono">${priceDisplay}</span>
-                            <span class="text-sm">${arrowIcon}</span>
-                        </div>
-                        <div class="flex flex-wrap items-center gap-x-2 text-xs mt-1">
-                            ${percentHtml}
-                            ${absoluteHtml}
-                        </div>
+                        <div class="flex items-center gap-2 mb-1"><img src="${asset.logo}" class="coin-logo" alt="${asset.symbol}" onerror="this.src='https://cryptologos.cc/logos/placeholder.png'"><span class="font-bold text-sm">${asset.name}</span><span class="text-xs text-gray-400">${asset.symbol}</span></div>
+                        <div class="flex items-baseline justify-between flex-wrap"><span class="text-base sm:text-lg font-bold font-mono">${priceDisplay}</span><span class="text-sm">${arrowIcon}</span></div>
+                        <div class="flex flex-wrap items-center gap-x-2 text-xs mt-1">${percentHtml} ${absoluteHtml}</div>
                     </div>
                 `;
             }
@@ -549,8 +345,7 @@
             const options = toggleDiv.querySelectorAll('.toggle-option');
             options.forEach(opt => {
                 opt.addEventListener('click', () => {
-                    const mode = opt.getAttribute('data-mode');
-                    globalMode = mode;
+                    globalMode = opt.getAttribute('data-mode');
                     options.forEach(o => o.classList.remove('active'));
                     opt.classList.add('active');
                     renderAllPrices();
@@ -578,10 +373,7 @@
                         const title = item.title, link = item.link, pubDate = new Date(item.pubDate).toLocaleString('id-ID');
                         let desc = item.description ? item.description.replace(/<[^>]*>/g,'').substring(0,120) : 'Klik untuk membaca.';
                         if(desc.length>100) desc = desc.substring(0,100)+'...';
-                        let thumb = '';
-                        if(item.enclosure?.link) thumb = item.enclosure.link;
-                        else if(item.thumbnail) thumb = item.thumbnail;
-                        else { const imgMatch = item.description?.match(/<img[^>]+src="([^">]+)"/); thumb = imgMatch?.[1] || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'; }
+                        let thumb = item.enclosure?.link || item.thumbnail || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png';
                         html += `<div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:border-blue-200 transition flex gap-4"><img src="${thumb}" class="w-20 h-20 object-cover rounded-lg bg-gray-100 flex-shrink-0" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'"><div class="flex-1"><a href="${link}" target="_blank" class="font-bold text-[#1e3a5f] hover:text-[#f7a21b] transition">${title}</a><p class="text-xs text-gray-500 mt-1">📅 ${pubDate}</p><p class="text-sm text-gray-600 mt-1">${desc}</p></div></div>`;
                     }
                     container.innerHTML = html;
@@ -634,22 +426,10 @@
             finally { btn.disabled=false; btn.innerHTML = `<i class="fas fa-paper-plane text-[10px]"></i> Kirim Pesan`; }
         }
         
-        // ========== VIDEO MODUL ==========
-        function playVideo(id) { 
-            document.getElementById('video-selection').classList.add('hidden'); 
-            document.getElementById('video-player').classList.remove('hidden'); 
-            document.getElementById('iframe-video').src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`; 
-        }
-        function backToSelection() { 
-            document.getElementById('video-selection').classList.remove('hidden'); 
-            document.getElementById('video-player').classList.add('hidden'); 
-            document.getElementById('iframe-video').src = ''; 
-        }
-        function closeModal() { 
-            backToSelection(); 
-            toggleModal('modal-video'); 
-            document.body.style.overflow = ''; 
-        }
+        // ========== VIDEO ==========
+        function playVideo(id) { document.getElementById('video-selection').classList.add('hidden'); document.getElementById('video-player').classList.remove('hidden'); document.getElementById('iframe-video').src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`; }
+        function backToSelection() { document.getElementById('video-selection').classList.remove('hidden'); document.getElementById('video-player').classList.add('hidden'); document.getElementById('iframe-video').src = ''; }
+        function closeModal() { backToSelection(); toggleModal('modal-video'); document.body.style.overflow = ''; }
         
         document.querySelectorAll('.fixed.inset-0.bg-black\\/70').forEach(m => m.addEventListener('click', function(e){ if(e.target===m) { if(m.id==='modal-anonim') closeAnonimModal(); else if(m.id==='modal-video') closeModal(); else if(m.id==='modal-crypto') { toggleModal('modal-crypto'); stopMarketUpdater(); document.body.style.overflow=''; } else if(m.id==='modal-news') closeNewsModal(); else if(m.id==='modal-stats') closeStatsModal(); } }));
     </script>
