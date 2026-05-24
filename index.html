@@ -7,13 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Firebase SDK (gaya namespace) -->
-    <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.0.0/firebase-database.js"></script>
-    
     <style>
-        /* semua style sama seperti versi sebelumnya (responsif, rapi) */
+        /* semua style sama seperti versi sebelumnya yang sudah responsif, tidak diubah */
         @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background: radial-gradient(circle at 100% 0%, #edeae5, #dcdad4); min-height: 100vh; color: #1a2e23; overflow-x: hidden; }
         .font-serif { font-family: 'DM Serif Display', serif; }
@@ -58,8 +53,6 @@
         .crypto-card:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,0.05); border-color:#f7a21b; }
         .coin-logo { width:24px; height:24px; object-fit:contain; margin-right:0.5rem; }
         @media (max-width:640px) { .modal-content { padding:1rem; } .crypto-card { padding:0.5rem; } }
-        /* Tambahan untuk container auth */
-        #auth-container button { width:100%; }
     </style>
 </head>
 <body class="p-4 md:p-12">
@@ -139,8 +132,6 @@
                 <button onclick="toggleModal('modal-anonim')" class="w-full bg-[#f7a21b] hover:bg-[#e08f12] text-white py-4 px-6 rounded-[1.5rem] shadow-sm font-bold hover-lift transition flex items-center justify-center gap-3">
                     <i class="fas fa-user-secret text-lg"></i> Kirim Pesan Anonim
                 </button>
-                <!-- Tempat untuk Auth (Login/Logout) akan muncul di sini -->
-                <div id="auth-container" class="mt-4"></div>
             </div>
         </header>
 
@@ -154,7 +145,7 @@
         </div>
     </main>
 
-    <!-- MODAL-MODAL (Market Price, Video, News, Stats, Anonim) sama seperti sebelumnya, tidak diubah -->
+    <!-- MODAL MARKET PRICE (dengan format IDR bulat tanpa desimal) -->
     <div id="modal-crypto" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
         <div class="bg-white rounded-[2rem] p-4 sm:p-6 md:p-8 w-full max-w-3xl relative shadow-2xl max-h-[90vh] overflow-y-auto modal-content">
             <button onclick="toggleModal('modal-crypto')" class="absolute top-4 right-4 text-gray-400 hover:text-black"><i class="fas fa-times text-xl"></i></button>
@@ -172,6 +163,7 @@
         </div>
     </div>
 
+    <!-- MODAL VIDEO (dengan logo YouTube dan instruksi fullscreen) -->
     <div id="modal-video" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
         <div class="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-2xl relative max-h-[90vh] overflow-y-auto shadow-2xl">
             <button onclick="closeModal()" class="absolute top-5 right-5 text-gray-400 hover:text-black transition"><i class="fas fa-times text-2xl"></i></button>
@@ -192,144 +184,14 @@
         </div>
     </div>
 
+    <!-- MODAL BERITA & STATS (tetap) -->
     <div id="modal-news" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50"><div class="bg-white rounded-[2rem] p-6 md:p-8 w-full max-w-3xl relative shadow-2xl max-h-[90vh] overflow-y-auto"><button onclick="closeNewsModal()" class="absolute top-6 right-6 text-gray-400 hover:text-black"><i class="fas fa-times text-xl"></i></button><div class="flex items-center gap-3 mb-5"><div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center"><i class="fas fa-newspaper text-[#1e3a5f] text-xl"></i></div><div><h3 class="font-serif text-2xl text-[#2b3934] font-bold">Berita Crypto Terkini</h3><p class="text-[11px] text-gray-400">Auto update 30 menit | Sumber: CoinDesk</p></div></div><div id="news-container" class="news-list space-y-4"><div class="text-center text-gray-400 py-10"><i class="fas fa-spinner animate-spin mr-2"></i> Memuat berita...</div></div><div class="mt-5 text-[10px] text-center text-gray-400 border-t pt-3"><i class="fas fa-external-link-alt"></i> Klik judul untuk baca lengkap</div></div></div>
     <div id="modal-stats" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50"><div class="bg-white rounded-[2rem] p-6 md:p-8 w-full max-w-lg relative shadow-2xl"><button onclick="closeStatsModal()" class="absolute top-6 right-6 text-gray-400 hover:text-black"><i class="fas fa-times text-xl"></i></button><div class="flex items-center gap-3 mb-5"><div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center"><i class="fas fa-chart-simple text-[#4a1d6d] text-xl"></i></div><div><h3 class="font-serif text-2xl text-[#2b3934] font-bold">Crypto Market Stats</h3><p class="text-[11px] text-gray-400">Update 10 detik</p></div></div><div class="space-y-4 text-center"><div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-5"><p class="text-sm text-gray-500">Total Market Cap</p><p id="total-market-cap" class="text-2xl font-bold">$ —</p></div><div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-5"><p class="text-sm text-gray-500">24h Volume</p><p id="total-volume" class="text-2xl font-bold">$ —</p></div><div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-5"><p class="text-sm text-gray-500">BTC Dominance</p><p id="btc-dominance" class="text-2xl font-bold">—%</p></div></div></div></div>
 
     <div id="modal-anonim" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50"><div class="bg-white rounded-2xl p-6 max-w-md w-full relative"><button onclick="closeAnonimModal()" class="absolute top-5 right-5 text-gray-400"><i class="fas fa-times"></i></button><div class="flex items-center gap-3"><i class="fas fa-user-secret text-2xl text-[#f7a21b]"></i><h3 class="text-2xl font-serif">Pesan Anonim</h3></div><form onsubmit="sendTelegramMessageModal(event)" class="mt-4"><textarea id="anonim-message-modal" rows="4" maxlength="500" class="w-full border rounded-xl p-3" placeholder="Tulis pesan..."></textarea><div class="text-right text-xs text-gray-400 mt-1"><span id="char-count-modal">0/500</span></div><div id="submit-status-modal" class="hidden my-2 text-sm"></div><button type="submit" id="btn-send-modal" class="w-full bg-[#2b3934] text-white py-3 rounded-xl mt-2 font-semibold">Kirim</button></form></div></div>
 
     <script>
-        // ==================== KONFIGURASI FIREBASE ====================
-        const firebaseConfig = {
-            apiKey: "AIzaSyDxM4iDjebiNuOfXFJ9IG9_fKI3riXJ6lM",
-            authDomain: "portofoliousersapp.firebaseapp.com",
-            projectId: "portofoliousersapp",
-            storageBucket: "portofoliousersapp.firebasestorage.app",
-            messagingSenderId: "420489331240",
-            appId: "1:420489331240:web:b805e68319448fbc95ab1d",
-            measurementId: "G-3VVKDFGG20"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const database = firebase.database();
-
-        // ==================== FITUR LOGIN/LOGOUT ====================
-        function signInWithGoogle() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    // Data user sudah otomatis tersimpan di onAuthStateChanged
-                    console.log("Login berhasil:", result.user);
-                })
-                .catch((error) => {
-                    console.error("Login gagal:", error);
-                    alert("Login gagal: " + error.message);
-                });
-        }
-
-        function signOut() {
-            auth.signOut().then(() => {
-                console.log("Logout berhasil");
-            }).catch((error) => {
-                console.error("Logout gagal:", error);
-            });
-        }
-
-        // Fungsi untuk menyimpan data user ke database
-        function saveUserToDatabase(user) {
-            if (!user) return;
-            const userData = {
-                uid: user.uid,
-                name: user.displayName || "",
-                email: user.email || "",
-                photoURL: user.photoURL || "",
-                lastLogin: firebase.database.ServerValue.TIMESTAMP
-            };
-            database.ref('users/' + user.uid).set(userData)
-                .catch(err => console.warn("Gagal simpan user:", err));
-        }
-
-        // Memantau status login dan update UI auth
-        auth.onAuthStateChanged(user => {
-            const authContainer = document.getElementById('auth-container');
-            if (!authContainer) return;
-
-            if (user) {
-                // Simpan data user jika ada perubahan (misalnya pertama kali login)
-                saveUserToDatabase(user);
-                // Tampilkan info login & logout button
-                authContainer.innerHTML = `
-                    <div class="bg-white/20 backdrop-blur-sm rounded-xl p-3 text-center">
-                        <p class="text-sm font-semibold">✅ Halo, ${user.displayName || user.email}</p>
-                        <button onclick="signOut()" class="mt-2 bg-red-500 text-white px-4 py-1 rounded-lg text-xs hover:bg-red-600 transition">Logout</button>
-                    </div>
-                `;
-                // Jika admin (email wilkaxyz@gmail.com) tampilkan tombol daftar user
-                if (user.email === 'wilkaxyz@gmail.com') {
-                    let adminBtn = document.getElementById('admin-users-btn');
-                    if (!adminBtn) {
-                        const btnDiv = document.createElement('div');
-                        btnDiv.id = 'admin-users-btn';
-                        btnDiv.className = 'mt-3';
-                        btnDiv.innerHTML = '<button onclick="fetchAndDisplayUsers()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl text-sm font-bold w-full transition">👥 Lihat Daftar Pengguna</button>';
-                        authContainer.after(btnDiv);
-                    }
-                } else {
-                    const existingAdminBtn = document.getElementById('admin-users-btn');
-                    if (existingAdminBtn) existingAdminBtn.remove();
-                }
-            } else {
-                authContainer.innerHTML = `
-                    <button onclick="signInWithGoogle()" class="bg-[#f7a21b] hover:bg-[#e08f12] text-white py-2 px-4 rounded-xl font-bold w-full transition">🔑 Login dengan Google</button>
-                `;
-                const adminBtn = document.getElementById('admin-users-btn');
-                if (adminBtn) adminBtn.remove();
-            }
-        });
-
-        // Fungsi untuk menampilkan daftar pengguna (hanya admin)
-        window.fetchAndDisplayUsers = function() {
-            const usersRef = database.ref('users');
-            usersRef.once('value')
-                .then(snapshot => {
-                    const usersData = snapshot.val();
-                    if (!usersData) {
-                        alert("Belum ada pengguna yang login.");
-                        return;
-                    }
-                    let modalHtml = `
-                        <div id="userModal" class="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50" onclick="this.remove()">
-                            <div class="bg-white rounded-2xl max-w-2xl w-full p-6 max-h-[80vh] overflow-auto" onclick="event.stopPropagation()">
-                                <div class="flex justify-between items-center mb-4">
-                                    <h3 class="text-xl font-bold text-[#2b3934]">📋 Daftar Pengguna Terdaftar</h3>
-                                    <button onclick="document.getElementById('userModal').remove()" class="text-gray-500 hover:text-gray-700">✖</button>
-                                </div>
-                                <table class="min-w-full text-sm">
-                                    <thead class="bg-gray-100">
-                                        <tr><th class="text-left p-2">Nama</th><th class="text-left p-2">Email</th><th class="text-left p-2">Terakhir Login</th></tr>
-                                    </thead>
-                                    <tbody>
-                    `;
-                    for (const uid in usersData) {
-                        const user = usersData[uid];
-                        const lastLogin = user.lastLogin ? new Date(user.lastLogin).toLocaleString('id-ID') : '-';
-                        modalHtml += `<tr class="border-t"><td class="p-2">${user.name || '-'}</td><td class="p-2">${user.email || '-'}</td><td class="p-2">${lastLogin}</td></tr>`;
-                    }
-                    modalHtml += `
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    `;
-                    document.body.insertAdjacentHTML('beforeend', modalHtml);
-                })
-                .catch(err => {
-                    console.error("Error mengambil data pengguna:", err);
-                    alert("Gagal mengambil data pengguna.");
-                });
-        };
-
-        // ==================== FITUR ASLI (TIDAK BERUBAH) ====================
-        // Photo slider, dropdown, market price, news, stats, anonim, video, dll.
+        // ========== PHOTO SLIDER ==========
         let currentSlide = 0;
         const slides = document.querySelectorAll('#photo-slider .slide');
         function showSlide(index) { slides.forEach((s,i)=> s.style.opacity = i===index?'1':'0'); }
@@ -356,10 +218,11 @@
         cryptoMainBtn.addEventListener('click', toggleDropdown);
         document.addEventListener('click', function(e) { if (!cryptoMainBtn.contains(e.target) && !cryptoDropdown.contains(e.target)) closeDropdown(); });
 
-        // MARKET PRICE (sama seperti versi sebelumnya)
+        // ========== MARKET PRICE GLOBAL TOGGLE dengan format IDR bulat ==========
         let globalMode = "usd";
         let marketInterval = null;
         let allPrices = {};
+        
         const assets = [
             { id: "ethereum", name: "Ethereum", symbol: "ETH", logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=026" },
             { id: "ripple", name: "XRP", symbol: "XRP", logo: "https://cryptologos.cc/logos/xrp-xrp-logo.png?v=026" },
@@ -387,6 +250,7 @@
                     if (globalMode === "usd") {
                         priceElem.innerText = `${currencySymbol} ${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
                     } else {
+                        // IDR dibulatkan, tanpa desimal
                         priceElem.innerText = `${currencySymbol} ${Math.round(price).toLocaleString('id-ID')}`;
                     }
                 }
@@ -396,7 +260,9 @@
                     const isPositive = changePercent >= 0;
                     changePercentElem.innerHTML = isPositive ? `<span class="positive"><i class="fas fa-arrow-up"></i> +${changePercent.toFixed(2)}% (24h)</span>` : `<span class="negative"><i class="fas fa-arrow-down"></i> ${changePercent.toFixed(2)}% (24h)</span>`;
                     const absValue = Math.abs(absoluteChange);
-                    const absFormatted = (globalMode === "usd") ? `$${absValue.toFixed(2)}` : `Rp ${Math.round(absValue).toLocaleString('id-ID')}`;
+                    const absFormatted = (globalMode === "usd") 
+                        ? `$${absValue.toFixed(2)}` 
+                        : `Rp ${Math.round(absValue).toLocaleString('id-ID')}`;
                     absoluteChangeElem.innerHTML = isPositive ? `<span class="positive">(▲ ${absFormatted})</span>` : `<span class="negative">(▼ ${absFormatted})</span>`;
                 } else {
                     changePercentElem.innerHTML = '<span class="text-gray-400">—% (24h)</span>';
@@ -420,11 +286,19 @@
                 const absoluteChange = price * changePercent / 100;
                 const arrowIcon = changePercent !== 0 ? (isPositive ? '<i class="fas fa-arrow-up arrow-up"></i>' : '<i class="fas fa-arrow-down arrow-down"></i>') : '<i class="fas fa-minus text-gray-400 text-xs"></i>';
                 const percentFormatted = changePercent.toFixed(2);
-                const percentHtml = changePercent !== 0 ? (isPositive ? `<span class="positive"><i class="fas fa-arrow-up"></i> +${percentFormatted}%</span>` : `<span class="negative"><i class="fas fa-arrow-down"></i> ${percentFormatted}%</span>`) : '<span class="text-gray-400">—%</span>';
+                const percentHtml = changePercent !== 0 ? 
+                    (isPositive ? `<span class="positive"><i class="fas fa-arrow-up"></i> +${percentFormatted}%</span>` : `<span class="negative"><i class="fas fa-arrow-down"></i> ${percentFormatted}%</span>`) 
+                    : '<span class="text-gray-400">—%</span>';
                 const absValue = Math.abs(absoluteChange);
-                const absFormatted = (globalMode === "usd") ? `$${absValue.toFixed(2)}` : `Rp ${Math.round(absValue).toLocaleString('id-ID')}`;
-                const absoluteHtml = changePercent !== 0 ? (isPositive ? `<span class="positive">(▲ ${absFormatted})</span>` : `<span class="negative">(▼ ${absFormatted})</span>`) : '';
-                const priceDisplay = (globalMode === "usd") ? `$${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : `Rp ${Math.round(price).toLocaleString('id-ID')}`;
+                const absFormatted = (globalMode === "usd") 
+                    ? `$${absValue.toFixed(2)}` 
+                    : `Rp ${Math.round(absValue).toLocaleString('id-ID')}`;
+                const absoluteHtml = changePercent !== 0 ? 
+                    (isPositive ? `<span class="positive">(▲ ${absFormatted})</span>` : `<span class="negative">(▼ ${absFormatted})</span>`) 
+                    : '';
+                const priceDisplay = (globalMode === "usd") 
+                    ? `$${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                    : `Rp ${Math.round(price).toLocaleString('id-ID')}`;
                 html += `
                     <div class="crypto-card">
                         <div class="flex items-center gap-2 mb-1"><img src="${asset.logo}" class="coin-logo" alt="${asset.symbol}" onerror="this.src='https://cryptologos.cc/logos/placeholder.png'"><span class="font-bold text-sm">${asset.name}</span><span class="text-xs text-gray-400">${asset.symbol}</span></div>
@@ -481,7 +355,7 @@
         document.addEventListener('DOMContentLoaded', initGlobalToggle);
         setTimeout(initGlobalToggle, 500);
         
-        // BERITA CRYPTO
+        // ========== BERITA CRYPTO ==========
         let newsCache = null, lastFetchTime = 0, newsAutoInterval = null;
         async function fetchCryptoNews() {
             const container = document.getElementById('news-container');
@@ -512,7 +386,7 @@
         async function loadNewsAndOpenModal() { if(newsCache && (Date.now()-lastFetchTime) < 30*60*1000) document.getElementById('news-container').innerHTML = newsCache; else await fetchCryptoNews(); toggleModal('modal-news'); startNewsAutoUpdate(); }
         function closeNewsModal() { toggleModal('modal-news'); stopNewsAutoUpdate(); document.body.style.overflow = ''; }
         
-        // STATS
+        // ========== STATS ==========
         let statsInterval = null;
         async function fetchGlobalStats() {
             try {
@@ -530,7 +404,7 @@
         function loadStatsAndOpenModal() { toggleModal('modal-stats'); startStatsAutoUpdate(); }
         function closeStatsModal() { toggleModal('modal-stats'); stopStatsAutoUpdate(); document.body.style.overflow = ''; }
         
-        // ANONIM MESSAGE
+        // ========== ANONIM MESSAGE ==========
         const txtArea = document.getElementById('anonim-message-modal');
         if(txtArea) txtArea.addEventListener('input', function(){ document.getElementById('char-count-modal').innerText = `${this.value.length}/500`; });
         function closeAnonimModal() { document.getElementById('anonim-message-modal').value = ''; document.getElementById('char-count-modal').innerText = '0/500'; document.getElementById('submit-status-modal').className = 'hidden'; toggleModal('modal-anonim'); document.body.style.overflow = ''; }
@@ -552,7 +426,7 @@
             finally { btn.disabled=false; btn.innerHTML = `<i class="fas fa-paper-plane text-[10px]"></i> Kirim Pesan`; }
         }
         
-        // VIDEO
+        // ========== VIDEO ==========
         function playVideo(id) { document.getElementById('video-selection').classList.add('hidden'); document.getElementById('video-player').classList.remove('hidden'); document.getElementById('iframe-video').src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`; }
         function backToSelection() { document.getElementById('video-selection').classList.remove('hidden'); document.getElementById('video-player').classList.add('hidden'); document.getElementById('iframe-video').src = ''; }
         function closeModal() { backToSelection(); toggleModal('modal-video'); document.body.style.overflow = ''; }
@@ -560,4 +434,4 @@
         document.querySelectorAll('.fixed.inset-0.bg-black\\/70').forEach(m => m.addEventListener('click', function(e){ if(e.target===m) { if(m.id==='modal-anonim') closeAnonimModal(); else if(m.id==='modal-video') closeModal(); else if(m.id==='modal-crypto') { toggleModal('modal-crypto'); stopMarketUpdater(); document.body.style.overflow=''; } else if(m.id==='modal-news') closeNewsModal(); else if(m.id==='modal-stats') closeStatsModal(); } }));
     </script>
 </body>
-</html>
+</html> pake yg ini , uh gajadi update yg tadi !! oh iya  saya mau nanya bisa gak web ini connect ke via logij google pas web nya awal awal di buka ? saya nanya dulu aja 
