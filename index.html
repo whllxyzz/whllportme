@@ -2,8 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio Will</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Portofolio Will — Desain & Teknologi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -32,13 +32,45 @@
             object-fit: cover;
             display: block;
         }
+
+        @keyframes subtle-pulse {
+            0% { opacity: 0.6; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .price-update {
+            animation: subtle-pulse 0.2s ease-in-out;
+        }
+
+        /* Indikator arah harga */
+        .price-up { color: #10b981; }   /* hijau */
+        .price-down { color: #ef4444; } /* merah */
+        .price-neutral { color: #4b5563; } /* abu-abu */
+        .arrow-up { color: #10b981; margin-left: 6px; font-size: 0.8rem; }
+        .arrow-down { color: #ef4444; margin-left: 6px; font-size: 0.8rem; }
+
+        .stock-list {
+            max-height: 460px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+        .stock-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .stock-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .stock-list::-webkit-scrollbar-thumb {
+            background: #f7a21b;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body class="p-4 md:p-12">
 
     <main class="max-w-6xl mx-auto">
         <nav class="flex justify-between items-center mb-8 md:mb-10">
-            <span class="text-xl font-bold">Will</span>
+            <span class="text-xl font-bold tracking-tight">Will</span>
             <div class="space-x-6 font-semibold text-xs uppercase tracking-widest hidden md:flex items-center">
                 <a href="#" class="hover:text-orange-700 transition">About me</a>
                 <a href="#" class="hover:text-orange-700 transition">Resume</a>
@@ -50,30 +82,30 @@
             
             <!-- LEFT COLUMN: Intro, Buttons, Projects, Spotify -->
             <div class="md:col-span-7 space-y-6">
-    <h2 class="text-5xl md:text-8xl font-serif leading-[0.9]">Hello,<br>I'm Will !</h2>
-    <p class="text-sm md:text-base leading-relaxed text-gray-800 max-w-lg">Graphic Designer otodidak & Digital Web Management enthusiast.</p>
-    
-    <div class="inline-block px-5 py-3 bg-white border border-black/5 rounded-2xl text-xs md:text-sm text-gray-700 shadow-sm cursor-default font-medium max-w-lg">
-        Kami bergerak di bidang teknologi, artificial intelligence, dan market industri.
-    </div>
-    
-    <div class="flex gap-4 flex-wrap">
-        <a href="#" class="group relative bg-[#f7a21b] text-white px-8 py-4 rounded-xl font-bold hover-lift overflow-hidden text-sm flex items-center gap-2">
-            <i class="fab fa-linkedin transition-transform group-hover:scale-110"></i> LinkedIn
-        </a>
-        <button onclick="toggleProjects()" class="group relative bg-[#2b3934] text-white px-8 py-4 rounded-xl font-bold hover-lift overflow-hidden text-sm flex items-center gap-2">
-            <i class="fas fa-folder-open transition-transform group-hover:scale-110"></i> Projects
-        </button>
-        <button onclick="toggleModal('modal-video')" class="group relative bg-[#2b3934] text-white px-8 py-4 rounded-xl font-bold hover-lift overflow-hidden text-sm flex items-center gap-2">
-            <i class="fas fa-play-circle transition-transform group-hover:scale-110"></i> Free Modul
-        </button>
-        <!-- Added Crypto Button -->
-        <button onclick="toggleModal('modal-crypto')" class="group relative bg-[#f7a21b] text-white px-8 py-4 rounded-xl font-bold hover-lift overflow-hidden text-sm flex items-center gap-2">
-            <i class="fab fa-bitcoin transition-transform group-hover:scale-110"></i> Crypto
-        </button>
-    </div>
-    
-    <div id="project-list" class="hidden space-y-3">
+                <h2 class="text-5xl md:text-8xl font-serif leading-[0.9]">Hello,<br>I'm Will !</h2>
+                <p class="text-sm md:text-base leading-relaxed text-gray-800 max-w-lg">Graphic Designer otodidak & Digital Web Management enthusiast.</p>
+                
+                <div class="inline-block px-5 py-3 bg-white border border-black/5 rounded-2xl text-xs md:text-sm text-gray-700 shadow-sm cursor-default font-medium max-w-lg">
+                    Kami bergerak di bidang teknologi, artificial intelligence, dan market industri.
+                </div>
+                
+                <div class="flex gap-4 flex-wrap">
+                    <a href="#" class="group relative bg-[#f7a21b] text-white px-8 py-4 rounded-xl font-bold hover-lift overflow-hidden text-sm flex items-center gap-2">
+                        <i class="fab fa-linkedin transition-transform group-hover:scale-110"></i> LinkedIn
+                    </a>
+                    <button onclick="toggleProjects()" class="group relative bg-[#2b3934] text-white px-8 py-4 rounded-xl font-bold hover-lift overflow-hidden text-sm flex items-center gap-2">
+                        <i class="fas fa-folder-open transition-transform group-hover:scale-110"></i> Projects
+                    </button>
+                    <button onclick="toggleModal('modal-video')" class="group relative bg-[#2b3934] text-white px-8 py-4 rounded-xl font-bold hover-lift overflow-hidden text-sm flex items-center gap-2">
+                        <i class="fas fa-play-circle transition-transform group-hover:scale-110"></i> Free Modul
+                    </button>
+                    <!-- TOMBOL MARKET PRICE (LENGKAP: BTC + GOLD + 11 SAHAM) -->
+                    <button onclick="toggleModal('modal-crypto')" class="group relative bg-[#f7a21b] text-white px-8 py-4 rounded-xl font-bold hover-lift overflow-hidden text-sm flex items-center gap-2">
+                        <i class="fas fa-chart-line transition-transform group-hover:scale-110"></i> Market Price
+                    </button>
+                </div>
+                
+                <div id="project-list" class="hidden space-y-3">
                     <a href="https://aismk.vercel.app" target="_blank" class="block bg-white p-4 rounded-2xl shadow-sm border border-black/5 hover:border-[#f7a21b] transition">
                         <div class="font-bold text-sm text-[#2b3934]">AISMK Web App</div>
                         <div class="text-[10px] text-gray-500 uppercase tracking-wider">Web Development</div>
@@ -133,48 +165,71 @@
                     <span>Kirim Pesan Anonim</span>
                 </button>
             </div>
-    <!-- Crypto Modal -->
+        </header>
+    </main>
+
+    <!-- MODAL MARKET PRICE (BTC + GOLD + 11 SAHAM INDONESIA) -->
     <div id="modal-crypto" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-[2rem] p-6 md:p-8 w-full max-w-3xl relative shadow-2xl">
+        <div class="bg-white rounded-[2rem] p-6 md:p-8 w-full max-w-2xl relative shadow-2xl">
             <button onclick="toggleModal('modal-crypto')" class="absolute top-6 right-6 text-gray-400 hover:text-black transition">
                 <i class="fas fa-times text-xl"></i>
             </button>
             
-            <div class="flex items-center gap-3 mb-6">
+            <div class="flex items-center gap-3 mb-5">
                 <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-                    <i class="fab fa-bitcoin text-[#f7a21b] text-xl"></i>
+                    <i class="fas fa-chart-line text-[#f7a21b] text-xl"></i>
                 </div>
                 <div>
-                    <h3 class="font-serif text-2xl text-[#2b3934] font-bold">Bitcoin Live Price</h3>
-                    <p class="text-[11px] text-gray-400">Real-time market data</p>
+                    <h3 class="font-serif text-2xl text-[#2b3934] font-bold">Market Price</h3>
+                    <p class="text-[11px] text-gray-400">Update otomatis setiap 8 detik</p>
                 </div>
             </div>
 
-            <!-- TradingView Widget -->
-            <div class="tradingview-widget-container h-[400px]">
-                <div id="tradingview_chart" class="h-full w-full"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-                <script type="text/javascript">
-                new TradingView.widget({
-                    "container_id": "tradingview_chart",
-                    "autosize": true,
-                    "symbol": "BITSTAMP:BTCUSD",
-                    "interval": "D",
-                    "timezone": "Etc/UTC",
-                    "theme": "light",
-                    "style": "1",
-                    "locale": "en",
-                    "toolbar_bg": "#f1f3f6",
-                    "enable_publishing": false,
-                    "hide_side_toolbar": false,
-                    "allow_symbol_change": true
-                });
-                </script>
+            <!-- SECTIONS -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <!-- LEFT: BTC + GOLD -->
+                <div class="space-y-4">
+                    <!-- Card Bitcoin -->
+                    <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-4 shadow-inner border border-amber-100">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-semibold text-gray-500"><i class="fab fa-bitcoin mr-1"></i> Bitcoin (BTC/USD)</span>
+                            <i class="fab fa-bitcoin text-xl text-[#f7a21b]"></i>
+                        </div>
+                        <div class="flex items-baseline flex-wrap">
+                            <span id="btc-usd-price" class="text-2xl font-bold font-mono tracking-tight">$ —,---</span>
+                            <span id="btc-arrow" class="ml-1 text-xs font-semibold"></span>
+                        </div>
+                        <div class="mt-1 text-xs text-gray-500">BTC/IDR: <span id="btc-idr-price" class="font-semibold">Rp —</span></div>
+                    </div>
+
+                    <!-- Card Gold -->
+                    <div class="bg-gradient-to-br from-yellow-50 to-amber-50 rounded-2xl p-4 shadow-inner border border-yellow-200">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-semibold text-gray-500"><i class="fas fa-coins mr-1"></i> Gold (XAU/USD)</span>
+                            <i class="fas fa-coins text-xl text-[#d4af37]"></i>
+                        </div>
+                        <div class="flex items-baseline flex-wrap">
+                            <span id="gold-usd-price" class="text-2xl font-bold font-mono tracking-tight">$ —,---.--</span>
+                            <span id="gold-arrow" class="ml-1 text-xs font-semibold"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Daftar Saham (Scroll) -->
+                <div class="stock-list space-y-2">
+                    <!-- item saham akan diisi javascript -->
+                </div>
+            </div>
+
+            <div class="mt-4 text-[10px] text-center text-gray-400 flex items-center justify-center gap-1 border-t pt-3">
+                <i class="fas fa-clock"></i> <span id="last-updated-market">Mengambil data...</span>
+                <span class="mx-1">•</span>
+                <span>Data: Yahoo Finance (real-time, saham IDR)</span>
             </div>
         </div>
     </div>
 
-    <!-- Video Modal -->
+    <!-- MODAL VIDEO PEMBELAJARAN (Free Modul) -->
     <div id="modal-video" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
         <div class="bg-white rounded-3xl p-8 w-full max-w-2xl relative max-h-[90vh] overflow-y-auto shadow-2xl">
             <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-black transition">
@@ -208,107 +263,336 @@
         </div>
     </div>
 
+    <!-- MODAL PESAN ANONIM (LENGKAP) -->
+    <div id="modal-anonim" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-[2rem] p-6 md:p-8 w-full max-w-lg relative shadow-2xl">
+            <button onclick="closeAnonimModal()" class="absolute top-6 right-6 text-gray-400 hover:text-black transition">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            
+            <div class="flex items-center gap-3 mb-5">
+                <div class="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center">
+                    <i class="fas fa-user-secret text-[#f7a21b] text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-serif text-2xl text-[#2b3934] font-bold">Kirim Pesan Anonim</h3>
+                    <p class="text-[11px] text-gray-400">Pesanmu akan langsung sampai ke Will via Telegram</p>
+                </div>
+            </div>
+
+            <form id="anonim-form-modal" onsubmit="sendTelegramMessageModal(event)">
+                <div class="mb-4">
+                    <textarea id="anonim-message-modal" rows="4" maxlength="500" placeholder="Tulis pesan rahasiamu di sini... (bisa kritik, saran, atau sekedar halo)" class="w-full p-4 border border-gray-200 rounded-2xl focus:border-[#f7a21b] focus:ring-1 focus:ring-[#f7a21b] outline-none transition resize-none text-sm"></textarea>
+                    <div class="flex justify-end mt-2">
+                        <span id="char-count-modal" class="text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">0 / 500</span>
+                    </div>
+                </div>
+                
+                <div id="submit-status-modal" class="hidden mb-4 p-3 rounded-xl text-center text-xs font-semibold"></div>
+                
+                <button type="submit" id="btn-send-modal" class="w-full bg-[#2b3934] hover:bg-[#1f2c27] text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm hover-lift">
+                    <i class="fas fa-paper-plane text-[10px]"></i> Kirim Pesan
+                </button>
+            </form>
+            <p class="text-center text-[10px] text-gray-400 mt-4">Pesan anonim sepenuhnya rahasia — identitas tidak tersimpan.</p>
+        </div>
+    </div>
+
     <script>
-        // Photo Slider Logic
+        // ======================= Photo Slider =======================
         let currentSlide = 0;
         const slides = document.querySelectorAll('#photo-slider .slide');
-        
         function showSlide(index) {
             slides.forEach((slide, i) => {
                 slide.style.opacity = i === index ? '1' : '0';
             });
         }
-
         setInterval(() => {
             currentSlide = (currentSlide + 1) % slides.length;
             showSlide(currentSlide);
         }, 3000);
 
-        // General UI Toggles
+        // ======================= General UI =======================
         function toggleProjects() { 
             document.getElementById('project-list').classList.toggle('hidden'); 
         }
+        
         function toggleModal(id) { 
             const modal = document.getElementById(id); 
+            if (!modal) return;
             modal.classList.toggle('hidden'); 
             modal.classList.toggle('flex'); 
+            if (!modal.classList.contains('hidden')) {
+                document.body.style.overflow = 'hidden';
+                if(id === 'modal-crypto') startMarketUpdater();
+            } else {
+                document.body.style.overflow = '';
+                if(id === 'modal-crypto') stopMarketUpdater();
+            }
         }
 
-        // Anonymous Message character limit tracker
+        // ======================= Saham Indonesia =======================
+        const stocks = [
+            { code: "WBSA", name: "BSA Logistics", logo: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png" },
+            { code: "BBCA", name: "Bank Central Asia", logo: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Bank_Central_Asia.svg" },
+            { code: "BBRI", name: "Bank BRI", logo: "https://upload.wikimedia.org/wikipedia/commons/4/42/BANK_BRI_logo.svg" },
+            { code: "CUAN", name: "Petrindo Jaya Kreasi", logo: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png" },
+            { code: "BUMI", name: "Bumi Resources", logo: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png" },
+            { code: "ARTO", name: "Bank Jago", logo: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png" },
+            { code: "GOTO", name: "GoTo Gojek Tokopedia", logo: "https://seeklogo.com/images/G/goto-gojek-tokopedia-logo-2D7EC258B1-seeklogo.com.png" }
+        ];
+
+        let lastPrices = {};
+        let stockInterval = null;
+
+        // helper update indicator dan harga
+        function updateStockDisplay(stock, priceElement, arrowElement, newPrice, lastPrice) {
+            if (lastPrice !== undefined && lastPrice !== newPrice) {
+                if (newPrice > lastPrice) {
+                    priceElement.classList.add('price-update');
+                    priceElement.classList.remove('price-down', 'price-neutral');
+                    priceElement.classList.add('price-up');
+                    arrowElement.innerHTML = '<i class="fas fa-arrow-up arrow-up"></i>';
+                } else if (newPrice < lastPrice) {
+                    priceElement.classList.add('price-update');
+                    priceElement.classList.remove('price-up', 'price-neutral');
+                    priceElement.classList.add('price-down');
+                    arrowElement.innerHTML = '<i class="fas fa-arrow-down arrow-down"></i>';
+                } else {
+                    priceElement.classList.remove('price-up', 'price-down');
+                    priceElement.classList.add('price-neutral');
+                    arrowElement.innerHTML = '<i class="fas fa-minus text-gray-400 text-xs"></i>';
+                }
+                setTimeout(() => priceElement.classList.remove('price-update'), 300);
+            }
+            priceElement.innerText = newPrice.toLocaleString('id-ID');
+        }
+
+        // fetch dari Yahoo Finance (cors proxy gratis)
+        async function fetchStockPrice(symbol) {
+            try {
+                const url = `https://query1.finance.yahoo.com/v8/finance/charts/${symbol}.JK`;
+                const response = await fetch(url);
+                const data = await response.json();
+                const price = data?.chart?.result?.[0]?.meta?.regularMarketPrice;
+                return price || null;
+            } catch (e) {
+                console.warn(`Gagal fetch ${symbol}:`, e);
+                return null;
+            }
+        }
+
+        async function updateAllStocks() {
+            const container = document.querySelector('.stock-list');
+            if (!container) return;
+
+            for (let stock of stocks) {
+                const price = await fetchStockPrice(stock.code);
+                if (price !== null) {
+                    const last = lastPrices[stock.code];
+                    lastPrices[stock.code] = price;
+
+                    // cek apakah elemen sudah ada
+                    let itemDiv = document.getElementById(`stock-${stock.code}`);
+                    if (!itemDiv) {
+                        // buat baru
+                        itemDiv = document.createElement('div');
+                        itemDiv.id = `stock-${stock.code}`;
+                        itemDiv.className = 'bg-white rounded-xl p-3 shadow-sm border border-gray-100 hover:border-orange-200 transition flex items-center justify-between';
+                        itemDiv.innerHTML = `
+                            <div class="flex items-center gap-3">
+                                <img src="${stock.logo}" alt="${stock.code}" class="w-8 h-8 object-contain rounded-full bg-gray-50 p-1">
+                                <div>
+                                    <div class="font-bold text-sm text-[#2b3934]">${stock.code}</div>
+                                    <div class="text-[10px] text-gray-400">${stock.name}</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="flex items-center">
+                                    <span id="price-${stock.code}" class="text-sm font-bold font-mono">${price.toLocaleString('id-ID')}</span>
+                                    <span id="arrow-${stock.code}" class="ml-1 text-xs"></span>
+                                </div>
+                                <div class="text-[10px] text-gray-400">IDR</div>
+                            </div>
+                        `;
+                        container.appendChild(itemDiv);
+                    }
+
+                    const priceSpan = document.getElementById(`price-${stock.code}`);
+                    const arrowSpan = document.getElementById(`arrow-${stock.code}`);
+                    if (priceSpan && arrowSpan) {
+                        updateStockDisplay(stock, priceSpan, arrowSpan, price, last);
+                    }
+                }
+            }
+        }
+
+        // ======================= Bitcoin & Gold =======================
+        let lastBtcUsd = 0;
+        let lastGoldUsd = 0;
+
+        async function fetchBitcoinPrice() {
+            try {
+                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd,idr');
+                const data = await response.json();
+                if (data?.bitcoin) {
+                    const usd = data.bitcoin.usd;
+                    const idr = data.bitcoin.idr;
+                    const usdElem = document.getElementById('btc-usd-price');
+                    const arrowElem = document.getElementById('btc-arrow');
+                    const idrElem = document.getElementById('btc-idr-price');
+                    if (usdElem) {
+                        if (lastBtcUsd !== 0 && lastBtcUsd !== usd) {
+                            usdElem.classList.add('price-update');
+                            setTimeout(() => usdElem.classList.remove('price-update'), 300);
+                        }
+                        if (lastBtcUsd !== 0 && usd > lastBtcUsd) {
+                            usdElem.classList.add('price-up');
+                            arrowElem.innerHTML = '<i class="fas fa-arrow-up arrow-up"></i>';
+                        } else if (lastBtcUsd !== 0 && usd < lastBtcUsd) {
+                            usdElem.classList.add('price-down');
+                            arrowElem.innerHTML = '<i class="fas fa-arrow-down arrow-down"></i>';
+                        } else {
+                            arrowElem.innerHTML = '<i class="fas fa-minus text-gray-400 text-xs"></i>';
+                        }
+                        usdElem.innerText = `$${usd.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                        lastBtcUsd = usd;
+                    }
+                    if (idrElem) idrElem.innerText = `Rp ${idr.toLocaleString('id-ID')}`;
+                }
+            } catch (e) { console.warn(e); }
+        }
+
+        async function fetchGoldPrice() {
+            try {
+                const response = await fetch('https://query1.finance.yahoo.com/v8/finance/charts/XAUUSD=X');
+                const data = await response.json();
+                const price = data?.chart?.result?.[0]?.meta?.regularMarketPrice;
+                if (price) {
+                    const goldElem = document.getElementById('gold-usd-price');
+                    const arrowElem = document.getElementById('gold-arrow');
+                    if (goldElem) {
+                        if (lastGoldUsd !== 0 && Math.abs(lastGoldUsd - price) > 0.01) {
+                            goldElem.classList.add('price-update');
+                            setTimeout(() => goldElem.classList.remove('price-update'), 300);
+                        }
+                        if (lastGoldUsd !== 0 && price > lastGoldUsd) {
+                            goldElem.classList.add('price-up');
+                            arrowElem.innerHTML = '<i class="fas fa-arrow-up arrow-up"></i>';
+                        } else if (lastGoldUsd !== 0 && price < lastGoldUsd) {
+                            goldElem.classList.add('price-down');
+                            arrowElem.innerHTML = '<i class="fas fa-arrow-down arrow-down"></i>';
+                        } else {
+                            arrowElem.innerHTML = '<i class="fas fa-minus text-gray-400 text-xs"></i>';
+                        }
+                        goldElem.innerText = `$${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                        lastGoldUsd = price;
+                    }
+                }
+            } catch (e) { console.warn(e); }
+        }
+
+        async function updateAllPrices() {
+            await Promise.all([fetchBitcoinPrice(), fetchGoldPrice(), updateAllStocks()]);
+            const timeElem = document.getElementById('last-updated-market');
+            if (timeElem) {
+                timeElem.innerText = `Update: ${new Date().toLocaleTimeString('id-ID')}`;
+            }
+        }
+
+        let marketInterval = null;
+        function startMarketUpdater() {
+            if (marketInterval) clearInterval(marketInterval);
+            updateAllPrices();
+            marketInterval = setInterval(updateAllPrices, 8000);
+        }
+        function stopMarketUpdater() {
+            if (marketInterval) clearInterval(marketInterval);
+            marketInterval = null;
+        }
+
+        // ======================= Anonim Message =======================
         const txtAreaModal = document.getElementById('anonim-message-modal');
         if (txtAreaModal) {
             txtAreaModal.addEventListener('input', function() {
-                document.getElementById('char-count-modal').innerText = `${this.value.length} / 500`;
+                const countSpan = document.getElementById('char-count-modal');
+                if(countSpan) countSpan.innerText = `${this.value.length} / 500`;
             });
         }
 
         function closeAnonimModal() {
-            document.getElementById('anonim-message-modal').value = '';
-            document.getElementById('char-count-modal').innerText = '0 / 500';
-            document.getElementById('submit-status-modal').className = 'hidden';
+            const textarea = document.getElementById('anonim-message-modal');
+            const charSpan = document.getElementById('char-count-modal');
+            const statusDiv = document.getElementById('submit-status-modal');
+            if(textarea) textarea.value = '';
+            if(charSpan) charSpan.innerText = '0 / 500';
+            if(statusDiv) {
+                statusDiv.innerText = '';
+                statusDiv.className = 'hidden';
+            }
             toggleModal('modal-anonim');
+            document.body.style.overflow = '';
         }
 
-        // Send Anonymous Message to Telegram Bot API
         async function sendTelegramMessageModal(event) {
-            event.preventDefault();
+            if(event) event.preventDefault();
             const messageVal = document.getElementById('anonim-message-modal').value.trim();
             const btn = document.getElementById('btn-send-modal');
             const statusDiv = document.getElementById('submit-status-modal');
             
-            if (!messageVal) return;
+            if (!messageVal) {
+                if(statusDiv) {
+                    statusDiv.innerText = "Pesan tidak boleh kosong ✨";
+                    statusDiv.className = "p-3 rounded-xl text-center text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 block";
+                }
+                return;
+            }
 
-            // Loading state
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fas fa-spinner animate-spin"></i> Mengirim...`;
-            statusDiv.className = "hidden";
+            if(btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<i class="fas fa-spinner animate-spin"></i> Mengirim...`;
+            }
+            if(statusDiv) statusDiv.className = "hidden";
 
-            // Bot Configuration
             const botToken = "8523579929:AAEYSUFre2O2Ei8RcW8y3emKA0-NxqJb4E8";
             const chatId = "7577331454";
-            const formattedMessage = `✉️ *Pesan Anonim Baru!*\n\n"${messageVal}"\n\n📅 _Dikirim: ${new Date().toLocaleString('id-ID')}_`;
+            const formattedMessage = `✉️ *Pesan Anonim Baru!*\n\n"${messageVal.substring(0, 800)}"\n\n📅 _Dikirim: ${new Date().toLocaleString('id-ID')}_`;
 
             try {
                 const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text: formattedMessage,
-                        parse_mode: 'Markdown'
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: chatId, text: formattedMessage, parse_mode: 'Markdown' })
                 });
-
                 const data = await response.json();
-
                 if (data.ok) {
-                    statusDiv.innerText = "Pesan rahasia terkirim ke Telegram Will! 🎉";
-                    statusDiv.className = "p-3 rounded-xl text-center text-xs font-semibold bg-green-50 text-green-700 border border-green-200 block";
-                    
-                    // Clear and close modal after success
-                    setTimeout(() => {
-                        closeAnonimModal();
-                    }, 2000);
+                    if(statusDiv) {
+                        statusDiv.innerText = "Pesan rahasia terkirim ke Telegram Will! 🎉";
+                        statusDiv.className = "p-3 rounded-xl text-center text-xs font-semibold bg-green-50 text-green-700 border border-green-200 block";
+                    }
+                    setTimeout(() => closeAnonimModal(), 1800);
                 } else {
                     throw new Error("Gagal mengirim.");
                 }
             } catch (error) {
-                statusDiv.innerText = "Gagal mengirim pesan. Coba lagi.";
-                statusDiv.className = "p-3 rounded-xl text-center text-xs font-semibold bg-red-50 text-red-700 border border-red-200 block";
+                if(statusDiv) {
+                    statusDiv.innerText = "Gagal mengirim pesan. Coba lagi nanti.";
+                    statusDiv.className = "p-3 rounded-xl text-center text-xs font-semibold bg-red-50 text-red-700 border border-red-200 block";
+                }
             } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fas fa-paper-plane text-[10px]"></i> Kirim Pesan`;
+                if(btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<i class="fas fa-paper-plane text-[10px]"></i> Kirim Pesan`;
+                }
+                if(statusDiv) statusDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         }
 
-        // Learning Module Video functions
-        function playVideo(id, title) {
+        // ======================= Video Modul =======================
+        function playVideo(id) {
             document.getElementById('video-selection').classList.add('hidden');
-            const player = document.getElementById('video-player');
-            player.classList.remove('hidden');
-            document.getElementById('iframe-video').src = `https://www.youtube.com/embed/${id}`;
+            document.getElementById('video-player').classList.remove('hidden');
+            document.getElementById('iframe-video').src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
         }
         function backToSelection() {
             document.getElementById('video-selection').classList.remove('hidden');
@@ -318,7 +602,26 @@
         function closeModal() { 
             backToSelection(); 
             toggleModal('modal-video'); 
+            document.body.style.overflow = '';
         }
+
+        // ======================= Overlay Closer =======================
+        document.querySelectorAll('.fixed.inset-0.bg-black\\/70').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if(e.target === modal) {
+                    const modalId = modal.getAttribute('id');
+                    if(modalId === 'modal-anonim') closeAnonimModal();
+                    else if(modalId === 'modal-video') closeModal();
+                    else if(modalId === 'modal-crypto') {
+                        toggleModal('modal-crypto');
+                        stopMarketUpdater();
+                        document.body.style.overflow = '';
+                    }
+                }
+            });
+        });
+
+        if(slides.length) showSlide(0);
     </script>
 </body>
 </html>
