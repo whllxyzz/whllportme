@@ -6,6 +6,7 @@
     <title>Portofolio Will</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #dcdad4; color: #1a2e23; overflow-x: hidden; }
@@ -18,6 +19,13 @@
             50% { transform: scale(1.15); opacity: 0.8; }
         }
         .animate-beat { animation: pulse-beat 1.5s ease-in-out infinite; }
+        
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
     </style>
 </head>
 <body class="p-4 md:p-12">
@@ -80,12 +88,20 @@
                     </div>
                     <iframe src="https://open.spotify.com/embed/track/2LBqCSwhJGcFQeTHMVGwy3" class="w-full h-20" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                     <iframe src="https://open.spotify.com/embed/track/7DY756WOLyOz2Xnhw4EFiC" class="w-full h-20" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                    <iframe src="https://open.spotify.com/embed/track/37F0uwRSrdzkBiuj0D5UHI" class="w-full h-20" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                    <!-- Lagu Baru -->
+                    <iframe src="https://open.spotify.com/embed/track/6qL5UWxRSQYml9O99ozoLv?autoplay=1" class="w-full h-20" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                 </div>
             </div>
             
             <div class="md:col-span-5 bg-[#2b3934] text-white p-6 rounded-[1.5rem] shadow-lg h-fit">
-                <div class="w-full aspect-square md:aspect-auto md:h-64 mb-6 overflow-hidden rounded-[1rem]">
-                    <img src="https://i.ibb.co.com/CKpQhNrQ/1778070770943.png" alt="Foto Profil" class="w-full h-full object-cover">
+                <div id="photo-slider" class="w-full aspect-square md:aspect-auto md:h-80 mb-6 overflow-hidden rounded-[1.25rem] relative bg-black/20">
+                    <div class="slide absolute w-full h-full transition-opacity duration-1000 ease-in-out opacity-100">
+                        <img src="https://i.ibb.co.com/4RXWHrQv/file-0000000077287208802f5fc8ba00fbb1.png" alt="Foto Profil 1">
+                    </div>
+                    <div class="slide absolute w-full h-full transition-opacity duration-1000 ease-in-out opacity-0">
+                        <img src="https://i.ibb.co.com/8LX1hfb7/file-00000000df847208a6b72b68da00ee43.png" alt="Foto Profil 2">
+                    </div>
                 </div>
                 <h3 class="font-bold text-sm mb-3">Contact</h3>
                 <div class="text-xs md:text-sm space-y-3 opacity-90">
@@ -96,7 +112,6 @@
         </header>
     </main>
 
-    <!-- Modal Video -->
     <div id="modal-video" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
         <div class="bg-white rounded-3xl p-8 w-full max-w-2xl relative max-h-[90vh] overflow-y-auto shadow-2xl">
             <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-black transition">
@@ -131,6 +146,20 @@
     </div>
 
     <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('#photo-slider .slide');
+        
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.opacity = i === index ? '1' : '0';
+            });
+        }
+
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }, 3000);
+
         function toggleProjects() { document.getElementById('project-list').classList.toggle('hidden'); }
         function toggleModal(id) { const modal = document.getElementById(id); modal.classList.toggle('hidden'); modal.classList.toggle('flex'); }
         function playVideo(id, title) {
