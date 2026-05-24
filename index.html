@@ -57,9 +57,9 @@
         .news-list::-webkit-scrollbar-thumb, .stats-list::-webkit-scrollbar-thumb { background: #f7a21b; border-radius: 10px; }
 
         .btn-uniform {
-            padding: 0.625rem 1.5rem;
-            font-size: 0.875rem;
-            font-weight: 700;
+            padding: 0.625rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
             border-radius: 0.75rem;
             display: inline-flex;
             align-items: center;
@@ -147,14 +147,14 @@
             width: auto;
         }
         .percentage-change {
-            font-size: 0.7rem;
-            font-weight: 500;
-            margin-left: 0.5rem;
-        }
-        .absolute-change {
             font-size: 0.65rem;
             font-weight: 500;
-            margin-left: 0.3rem;
+            margin-left: 0.25rem;
+        }
+        .absolute-change {
+            font-size: 0.6rem;
+            font-weight: 500;
+            margin-left: 0.25rem;
         }
         .positive { color: #10b981; }
         .negative { color: #ef4444; }
@@ -177,6 +177,46 @@
             background: #f7a21b;
             color: white;
             box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .crypto-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            max-height: 460px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+        @media (min-width: 640px) {
+            .crypto-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .crypto-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 0.75rem;
+            transition: all 0.2s;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .crypto-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            border-color: #f7a21b;
+        }
+        .coin-logo {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            margin-right: 0.5rem;
+        }
+        /* Responsive modal pada mobile */
+        @media (max-width: 640px) {
+            .modal-content {
+                padding: 1rem;
+            }
+            .crypto-card {
+                padding: 0.5rem;
+            }
         }
     </style>
 </head>
@@ -279,42 +319,45 @@
         </div>
     </main>
 
-    <!-- MODAL MARKET PRICE dengan SWITCH USD/IDR dan absolute change -->
+    <!-- MODAL MARKET PRICE dengan toggle global USD/IDR -->
     <div id="modal-crypto" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-[2rem] p-6 md:p-8 w-full max-w-md relative shadow-2xl">
-            <button onclick="toggleModal('modal-crypto')" class="absolute top-6 right-6 text-gray-400 hover:text-black"><i class="fas fa-times text-xl"></i></button>
-            <div class="flex items-center gap-3 mb-6"><div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center"><i class="fas fa-chart-line text-[#f7a21b] text-xl"></i></div><div><h3 class="font-serif text-2xl text-[#2b3934] font-bold">Market Price</h3><p class="text-[11px] text-gray-400">Update otomatis setiap 8 detik</p></div></div>
-            <div class="space-y-5">
-                <!-- Bitcoin Card with toggle -->
-                <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-5 shadow-inner border border-amber-100">
-                    <div class="flex justify-between items-center mb-2 flex-wrap gap-2">
-                        <span class="text-sm font-semibold text-gray-500"><i class="fab fa-bitcoin mr-1"></i> Bitcoin (BTC)</span>
-                        <div id="btc-toggle" class="toggle-switch">
-                            <span data-mode="usd" class="toggle-option active">USD</span>
-                            <span data-mode="idr" class="toggle-option">IDR</span>
-                        </div>
-                    </div>
-                    <div class="flex items-baseline flex-wrap justify-between">
-                        <span id="btc-price-display" class="text-3xl md:text-4xl font-bold font-mono tracking-tight">$ —,---</span>
-                        <span id="btc-arrow" class="text-sm font-semibold"></span>
-                    </div>
-                    <div class="mt-2 flex flex-wrap items-baseline gap-x-2">
-                        <span id="btc-change-percent" class="percentage-change"></span>
-                        <span id="btc-absolute-change" class="absolute-change"></span>
-                    </div>
+        <div class="bg-white rounded-[2rem] p-4 sm:p-6 md:p-8 w-full max-w-3xl relative shadow-2xl max-h-[90vh] overflow-y-auto modal-content">
+            <button onclick="toggleModal('modal-crypto')" class="absolute top-4 right-4 text-gray-400 hover:text-black"><i class="fas fa-times text-xl"></i></button>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center"><i class="fas fa-chart-line text-[#f7a21b] text-xl"></i></div>
+                    <div><h3 class="font-serif text-xl sm:text-2xl text-[#2b3934] font-bold">Market Price</h3><p class="text-[10px] sm:text-[11px] text-gray-400">Update otomatis setiap 8 detik</p></div>
                 </div>
-                <!-- Gold Card (USD only) -->
-                <div class="bg-gradient-to-br from-yellow-50 to-amber-50 rounded-2xl p-5 shadow-inner border border-yellow-200">
-                    <div class="flex justify-between items-center mb-2"><span class="text-sm font-semibold text-gray-500"><i class="fas fa-coins mr-1"></i> Gold (XAU/USD)</span><i class="fas fa-coins text-2xl text-[#d4af37]"></i></div>
-                    <div class="flex items-baseline flex-wrap justify-between"><span id="gold-usd-price" class="text-3xl md:text-4xl font-bold font-mono tracking-tight">$ —,---.--</span><span id="gold-arrow" class="text-sm font-semibold"></span></div>
-                    <div class="mt-1"><span id="gold-change-percent" class="percentage-change"></span><span id="gold-absolute-change" class="absolute-change"></span></div>
+                <!-- Toggle Global USD/IDR -->
+                <div id="global-toggle" class="toggle-switch self-start sm:self-auto">
+                    <span data-mode="usd" class="toggle-option active">USD</span>
+                    <span data-mode="idr" class="toggle-option">IDR</span>
                 </div>
             </div>
-            <div class="mt-5 text-[10px] text-center text-gray-400"><i class="fas fa-clock"></i> <span id="last-updated-market">Mengambil data...</span></div>
+            
+            <!-- Bitcoin Card (tanpa toggle sendiri) -->
+            <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-4 mb-4 shadow-inner border border-amber-100">
+                <div class="flex items-center gap-2"><img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=026" class="coin-logo" alt="BTC"><span class="font-bold text-base sm:text-lg">Bitcoin (BTC)</span></div>
+                <div class="flex items-baseline flex-wrap justify-between mt-1">
+                    <span id="btc-price-display" class="text-xl sm:text-2xl font-bold font-mono">$ —,---</span>
+                    <span id="btc-arrow" class="text-sm"></span>
+                </div>
+                <div class="flex flex-wrap items-baseline gap-x-2 mt-1">
+                    <span id="btc-change-percent" class="percentage-change"></span>
+                    <span id="btc-absolute-change" class="absolute-change"></span>
+                </div>
+            </div>
+            
+            <!-- Grid 9 aset crypto lainnya -->
+            <div class="crypto-grid" id="crypto-grid-container">
+                <div class="col-span-full text-center py-10 text-gray-400"><i class="fas fa-spinner animate-spin mr-2"></i> Memuat data crypto...</div>
+            </div>
+            
+            <div class="mt-4 text-[10px] text-center text-gray-400"><i class="fas fa-clock"></i> <span id="last-updated-market">Mengambil data...</span></div>
         </div>
     </div>
 
-    <!-- MODAL BERITA & STATS (sama seperti asli, tidak diubah) -->
+    <!-- MODAL BERITA & STATS (tetap sama, tidak diubah) -->
     <div id="modal-news" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50"><div class="bg-white rounded-[2rem] p-6 md:p-8 w-full max-w-3xl relative shadow-2xl max-h-[90vh] overflow-y-auto"><button onclick="closeNewsModal()" class="absolute top-6 right-6 text-gray-400 hover:text-black"><i class="fas fa-times text-xl"></i></button><div class="flex items-center gap-3 mb-5"><div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center"><i class="fas fa-newspaper text-[#1e3a5f] text-xl"></i></div><div><h3 class="font-serif text-2xl text-[#2b3934] font-bold">Berita Crypto Terkini</h3><p class="text-[11px] text-gray-400">Auto update 30 menit | Sumber: CoinDesk</p></div></div><div id="news-container" class="news-list space-y-4"><div class="text-center text-gray-400 py-10"><i class="fas fa-spinner animate-spin mr-2"></i> Memuat berita...</div></div><div class="mt-5 text-[10px] text-center text-gray-400 border-t pt-3"><i class="fas fa-external-link-alt"></i> Klik judul untuk baca lengkap</div></div></div>
     <div id="modal-stats" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50"><div class="bg-white rounded-[2rem] p-6 md:p-8 w-full max-w-lg relative shadow-2xl"><button onclick="closeStatsModal()" class="absolute top-6 right-6 text-gray-400 hover:text-black"><i class="fas fa-times text-xl"></i></button><div class="flex items-center gap-3 mb-5"><div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center"><i class="fas fa-chart-simple text-[#4a1d6d] text-xl"></i></div><div><h3 class="font-serif text-2xl text-[#2b3934] font-bold">Crypto Market Stats</h3><p class="text-[11px] text-gray-400">Update 10 detik</p></div></div><div class="space-y-4 text-center"><div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-5"><p class="text-sm text-gray-500">Total Market Cap</p><p id="total-market-cap" class="text-2xl font-bold">$ —</p></div><div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-5"><p class="text-sm text-gray-500">24h Volume</p><p id="total-volume" class="text-2xl font-bold">$ —</p></div><div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-5"><p class="text-sm text-gray-500">BTC Dominance</p><p id="btc-dominance" class="text-2xl font-bold">—%</p></div></div></div></div>
 
@@ -349,147 +392,160 @@
         cryptoMainBtn.addEventListener('click', toggleDropdown);
         document.addEventListener('click', function(e) { if (!cryptoMainBtn.contains(e.target) && !cryptoDropdown.contains(e.target)) closeDropdown(); });
 
-        // ========== MARKET PRICE with toggle & absolute change ==========
-        let lastBtcUsd = 0, lastGoldUsd = 0;
-        let btcPriceUsd = 0, btcPriceIdr = 0;
-        let btcChangePercent = 0;
-        let goldPrice = 0, goldChangePercent = 0;
-        let btcMode = "usd"; // 'usd' or 'idr'
+        // ========== MARKET PRICE dengan GLOBAL TOGGLE ==========
+        let globalMode = "usd"; // 'usd' or 'idr'
         let marketInterval = null;
-
-        // Fungsi update tampilan BTC berdasarkan mode
-        function updateBTCPriceDisplay() {
-            const priceElem = document.getElementById('btc-price-display');
-            const arrowElem = document.getElementById('btc-arrow');
-            const changePercentElem = document.getElementById('btc-change-percent');
-            const absoluteChangeElem = document.getElementById('btc-absolute-change');
-            if (!priceElem) return;
-
-            let price, currencySymbol, absoluteChangeValue;
-            if (btcMode === "usd") {
-                price = btcPriceUsd;
-                currencySymbol = "$";
-                absoluteChangeValue = (btcPriceUsd * btcChangePercent / 100);
-            } else {
-                price = btcPriceIdr;
-                currencySymbol = "Rp";
-                absoluteChangeValue = (btcPriceIdr * btcChangePercent / 100);
-            }
-            // Format harga
-            if (btcMode === "usd") {
-                priceElem.innerText = `${currencySymbol} ${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-            } else {
-                priceElem.innerText = `${currencySymbol} ${price.toLocaleString('id-ID')}`;
-            }
-            // Update arrow berdasarkan perubahan (hanya arah dari persen)
-            if (btcChangePercent !== 0) {
-                if (btcChangePercent > 0) arrowElem.innerHTML = '<i class="fas fa-arrow-up arrow-up"></i>';
-                else if (btcChangePercent < 0) arrowElem.innerHTML = '<i class="fas fa-arrow-down arrow-down"></i>';
-                else arrowElem.innerHTML = '<i class="fas fa-minus text-gray-400 text-xs"></i>';
-            } else arrowElem.innerHTML = '';
-
-            // Persentase
-            if (btcChangePercent !== 0) {
-                const percentFormatted = btcChangePercent.toFixed(2);
-                const isPositive = btcChangePercent >= 0;
-                changePercentElem.innerHTML = isPositive ? `<span class="positive"><i class="fas fa-arrow-up"></i> +${percentFormatted}% (24h)</span>` : `<span class="negative"><i class="fas fa-arrow-down"></i> ${percentFormatted}% (24h)</span>`;
-                // Absolute change
-                const absValue = Math.abs(absoluteChangeValue);
-                const absFormatted = (btcMode === "usd") 
-                    ? `$${absValue.toFixed(2)}` 
-                    : `Rp ${absValue.toLocaleString('id-ID')}`;
-                absoluteChangeElem.innerHTML = isPositive 
-                    ? `<span class="positive">(▲ ${absFormatted})</span>` 
-                    : `<span class="negative">(▼ ${absFormatted})</span>`;
-            } else {
-                changePercentElem.innerHTML = '<span class="text-gray-400">—% (24h)</span>';
-                absoluteChangeElem.innerHTML = '';
-            }
-        }
-
-        async function fetchBitcoinPrice() {
-            try {
-                const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd,idr&include_24hr_change=true');
-                const data = await res.json();
-                if (data?.bitcoin) {
-                    btcPriceUsd = data.bitcoin.usd;
-                    btcPriceIdr = data.bitcoin.idr;
-                    btcChangePercent = data.bitcoin.usd_24h_change ?? 0;
-                    updateBTCPriceDisplay();
-                }
-            } catch(e) { console.warn('BTC fetch error', e); }
-        }
-
-        async function fetchGoldPrice() {
-            try {
-                const res = await fetch('https://query1.finance.yahoo.com/v8/finance/charts/XAUUSD=X');
-                const data = await res.json();
-                const meta = data?.chart?.result?.[0]?.meta;
-                const price = meta?.regularMarketPrice;
-                const changePercent = meta?.regularMarketChangePercent;
-                if (price) {
-                    goldPrice = price;
-                    goldChangePercent = changePercent ?? 0;
-                    const goldElem = document.getElementById('gold-usd-price');
-                    const arrowElem = document.getElementById('gold-arrow');
-                    const changePercentElem = document.getElementById('gold-change-percent');
-                    const absoluteChangeElem = document.getElementById('gold-absolute-change');
-                    if (goldElem) {
-                        if (lastGoldUsd !== 0 && Math.abs(lastGoldUsd - price) > 0.01) goldElem.classList.add('price-update');
-                        setTimeout(() => goldElem.classList.remove('price-update'), 300);
-                        if (lastGoldUsd !== 0 && price > lastGoldUsd) arrowElem.innerHTML = '<i class="fas fa-arrow-up arrow-up"></i>';
-                        else if (lastGoldUsd !== 0 && price < lastGoldUsd) arrowElem.innerHTML = '<i class="fas fa-arrow-down arrow-down"></i>';
-                        else arrowElem.innerHTML = '<i class="fas fa-minus text-gray-400 text-xs"></i>';
-                        goldElem.innerText = `$${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-                        lastGoldUsd = price;
-                    }
-                    if (changePercentElem && typeof changePercent === 'number') {
-                        const percent = changePercent.toFixed(2);
-                        const isPositive = changePercent >= 0;
-                        changePercentElem.innerHTML = isPositive 
-                            ? `<span class="positive"><i class="fas fa-arrow-up"></i> +${percent}% (24h)</span>` 
-                            : `<span class="negative"><i class="fas fa-arrow-down"></i> ${percent}% (24h)</span>`;
-                        // Absolute change for gold
-                        const absoluteChange = price * changePercent / 100;
-                        const absValue = Math.abs(absoluteChange);
-                        absoluteChangeElem.innerHTML = isPositive 
-                            ? `<span class="positive">(▲ $${absValue.toFixed(2)})</span>` 
-                            : `<span class="negative">(▼ $${absValue.toFixed(2)})</span>`;
+        
+        // Data untuk semua aset (termasuk BTC)
+        let allPrices = {}; // key: id, value: { usd, idr, change }
+        
+        // Daftar aset (ID CoinGecko, nama, simbol, logo URL)
+        const assets = [
+            { id: "ethereum", name: "Ethereum", symbol: "ETH", logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=026" },
+            { id: "ripple", name: "XRP", symbol: "XRP", logo: "https://cryptologos.cc/logos/xrp-xrp-logo.png?v=026" },
+            { id: "solana", name: "Solana", symbol: "SOL", logo: "https://cryptologos.cc/logos/solana-sol-logo.png?v=026" },
+            { id: "binancecoin", name: "Binance Coin", symbol: "BNB", logo: "https://cryptologos.cc/logos/bnb-bnb-logo.png?v=026" },
+            { id: "cardano", name: "Cardano", symbol: "ADA", logo: "https://cryptologos.cc/logos/cardano-ada-logo.png?v=026" },
+            { id: "dogecoin", name: "Dogecoin", symbol: "DOGE", logo: "https://cryptologos.cc/logos/dogecoin-doge-logo.png?v=026" },
+            { id: "avalanche-2", name: "Avalanche", symbol: "AVAX", logo: "https://cryptologos.cc/logos/avalanche-avax-logo.png?v=026" },
+            { id: "polkadot", name: "Polkadot", symbol: "DOT", logo: "https://cryptologos.cc/logos/polkadot-new-dot-logo.png?v=026" },
+            { id: "polygon", name: "Polygon", symbol: "MATIC", logo: "https://cryptologos.cc/logos/polygon-matic-logo.png?v=026" }
+        ];
+        
+        // Fungsi update tampilan semua card (BTC dan grid) berdasarkan globalMode
+        function renderAllPrices() {
+            // Update BTC card
+            const btcData = allPrices['bitcoin'];
+            if (btcData) {
+                const price = globalMode === "usd" ? btcData.usd : btcData.idr;
+                const currencySymbol = globalMode === "usd" ? "$" : "Rp";
+                const priceElem = document.getElementById('btc-price-display');
+                const arrowElem = document.getElementById('btc-arrow');
+                const changePercentElem = document.getElementById('btc-change-percent');
+                const absoluteChangeElem = document.getElementById('btc-absolute-change');
+                const changePercent = btcData.change;
+                const absoluteChange = price * changePercent / 100;
+                if (priceElem) {
+                    if (globalMode === "usd") {
+                        priceElem.innerText = `${currencySymbol} ${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
                     } else {
-                        changePercentElem.innerHTML = '<span class="text-gray-400">—% (24h)</span>';
-                        absoluteChangeElem.innerHTML = '';
+                        priceElem.innerText = `${currencySymbol} ${price.toLocaleString('id-ID')}`;
                     }
                 }
-            } catch(e) { console.warn('Gold fetch error', e); }
+                if (changePercent !== 0) {
+                    if (changePercent > 0) arrowElem.innerHTML = '<i class="fas fa-arrow-up arrow-up"></i>';
+                    else arrowElem.innerHTML = '<i class="fas fa-arrow-down arrow-down"></i>';
+                    const isPositive = changePercent >= 0;
+                    changePercentElem.innerHTML = isPositive ? `<span class="positive"><i class="fas fa-arrow-up"></i> +${changePercent.toFixed(2)}% (24h)</span>` : `<span class="negative"><i class="fas fa-arrow-down"></i> ${changePercent.toFixed(2)}% (24h)</span>`;
+                    const absValue = Math.abs(absoluteChange);
+                    const absFormatted = (globalMode === "usd") ? `$${absValue.toFixed(2)}` : `Rp ${absValue.toLocaleString('id-ID')}`;
+                    absoluteChangeElem.innerHTML = isPositive ? `<span class="positive">(▲ ${absFormatted})</span>` : `<span class="negative">(▼ ${absFormatted})</span>`;
+                } else {
+                    changePercentElem.innerHTML = '<span class="text-gray-400">—% (24h)</span>';
+                    absoluteChangeElem.innerHTML = '';
+                }
+            }
+            
+            // Update grid altcoin
+            const container = document.getElementById('crypto-grid-container');
+            if (!container) return;
+            if (Object.keys(allPrices).length === 0) {
+                container.innerHTML = '<div class="col-span-full text-center py-10 text-gray-400"><i class="fas fa-spinner animate-spin mr-2"></i> Memuat data...</div>';
+                return;
+            }
+            let html = '';
+            for (let asset of assets) {
+                const data = allPrices[asset.id];
+                if (!data) continue;
+                const price = globalMode === "usd" ? data.usd : data.idr;
+                const changePercent = data.change;
+                const isPositive = changePercent >= 0;
+                const absoluteChange = price * changePercent / 100;
+                const arrowIcon = changePercent !== 0 ? (isPositive ? '<i class="fas fa-arrow-up arrow-up"></i>' : '<i class="fas fa-arrow-down arrow-down"></i>') : '<i class="fas fa-minus text-gray-400 text-xs"></i>';
+                const percentFormatted = changePercent.toFixed(2);
+                const percentHtml = changePercent !== 0 ? 
+                    (isPositive ? `<span class="positive"><i class="fas fa-arrow-up"></i> +${percentFormatted}%</span>` : `<span class="negative"><i class="fas fa-arrow-down"></i> ${percentFormatted}%</span>`) 
+                    : '<span class="text-gray-400">—%</span>';
+                const absValue = Math.abs(absoluteChange);
+                const absFormatted = (globalMode === "usd") ? `$${absValue.toFixed(2)}` : `Rp ${absValue.toLocaleString('id-ID')}`;
+                const absoluteHtml = changePercent !== 0 ? 
+                    (isPositive ? `<span class="positive">(▲ ${absFormatted})</span>` : `<span class="negative">(▼ ${absFormatted})</span>`) 
+                    : '';
+                
+                const priceDisplay = (globalMode === "usd") 
+                    ? `$${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                    : `Rp ${price.toLocaleString('id-ID')}`;
+                
+                html += `
+                    <div class="crypto-card">
+                        <div class="flex items-center gap-2 mb-1">
+                            <img src="${asset.logo}" class="coin-logo" alt="${asset.symbol}" onerror="this.src='https://cryptologos.cc/logos/placeholder.png'">
+                            <span class="font-bold text-sm">${asset.name}</span>
+                            <span class="text-xs text-gray-400">${asset.symbol}</span>
+                        </div>
+                        <div class="flex items-baseline justify-between flex-wrap">
+                            <span class="text-base sm:text-lg font-bold font-mono">${priceDisplay}</span>
+                            <span class="text-sm">${arrowIcon}</span>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-x-2 text-xs mt-1">
+                            ${percentHtml}
+                            ${absoluteHtml}
+                        </div>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
         }
-
-        async function updateAllPrices() { await Promise.all([fetchBitcoinPrice(), fetchGoldPrice()]); const ts=document.getElementById('last-updated-market'); if(ts) ts.innerText = `Update: ${new Date().toLocaleTimeString('id-ID')}`; }
+        
+        async function fetchAllPrices() {
+            try {
+                const ids = "bitcoin,ethereum,ripple,solana,binancecoin,cardano,dogecoin,avalanche-2,polkadot,polygon";
+                const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd,idr&include_24hr_change=true`;
+                const res = await fetch(url);
+                const data = await res.json();
+                if (data) {
+                    // Simpan semua data ke allPrices
+                    for (let id of ['bitcoin', ...assets.map(a => a.id)]) {
+                        if (data[id]) {
+                            allPrices[id] = {
+                                usd: data[id].usd,
+                                idr: data[id].idr,
+                                change: data[id].usd_24h_change ?? 0
+                            };
+                        }
+                    }
+                    renderAllPrices();
+                }
+            } catch(e) { console.warn('Fetch error', e); }
+        }
+        
+        async function updateAllPrices() { 
+            await fetchAllPrices(); 
+            const ts=document.getElementById('last-updated-market'); 
+            if(ts) ts.innerText = `Update: ${new Date().toLocaleTimeString('id-ID')}`; 
+        }
         function startMarketUpdater() { if(marketInterval) clearInterval(marketInterval); updateAllPrices(); marketInterval = setInterval(updateAllPrices, 8000); }
         function stopMarketUpdater() { if(marketInterval) clearInterval(marketInterval); marketInterval = null; }
-
-        // Toggle switch logic
-        function initToggle() {
-            const toggleDiv = document.getElementById('btc-toggle');
+        
+        // Global toggle initialization
+        function initGlobalToggle() {
+            const toggleDiv = document.getElementById('global-toggle');
             if (!toggleDiv) return;
             const options = toggleDiv.querySelectorAll('.toggle-option');
             options.forEach(opt => {
                 opt.addEventListener('click', () => {
                     const mode = opt.getAttribute('data-mode');
-                    if (mode === 'usd') btcMode = 'usd';
-                    else if (mode === 'idr') btcMode = 'idr';
+                    globalMode = mode;
                     options.forEach(o => o.classList.remove('active'));
                     opt.classList.add('active');
-                    updateBTCPriceDisplay();
+                    renderAllPrices(); // refresh semua tampilan dengan mode baru
                 });
             });
         }
-
-        // Panggil init setelah modal pertama kali dibuka atau DOM siap
-        document.addEventListener('DOMContentLoaded', initToggle);
-        // Karena modal bisa muncul setelahnya, panggil juga saat toggle modal (tapi cukup sekali)
-        setTimeout(initToggle, 500);
-
-        // ========== BERITA CRYPTO (sama seperti asli) ==========
+        document.addEventListener('DOMContentLoaded', initGlobalToggle);
+        setTimeout(initGlobalToggle, 500);
+        
+        // ========== BERITA CRYPTO (sama) ==========
         let newsCache = null, lastFetchTime = 0, newsAutoInterval = null;
         async function fetchCryptoNews() {
             const container = document.getElementById('news-container');
@@ -522,7 +578,7 @@
         function stopNewsAutoUpdate() { if(newsAutoInterval) clearInterval(newsAutoInterval); newsAutoInterval = null; }
         async function loadNewsAndOpenModal() { if(newsCache && (Date.now()-lastFetchTime) < 30*60*1000) document.getElementById('news-container').innerHTML = newsCache; else await fetchCryptoNews(); toggleModal('modal-news'); startNewsAutoUpdate(); }
         function closeNewsModal() { toggleModal('modal-news'); stopNewsAutoUpdate(); document.body.style.overflow = ''; }
-
+        
         // ========== STATS ==========
         let statsInterval = null;
         async function fetchGlobalStats() {
@@ -540,7 +596,7 @@
         function stopStatsAutoUpdate() { if(statsInterval) clearInterval(statsInterval); statsInterval = null; }
         function loadStatsAndOpenModal() { toggleModal('modal-stats'); startStatsAutoUpdate(); }
         function closeStatsModal() { toggleModal('modal-stats'); stopStatsAutoUpdate(); document.body.style.overflow = ''; }
-
+        
         // ========== ANONIM MESSAGE ==========
         const txtArea = document.getElementById('anonim-message-modal');
         if(txtArea) txtArea.addEventListener('input', function(){ document.getElementById('char-count-modal').innerText = `${this.value.length}/500`; });
@@ -562,11 +618,11 @@
             } catch(err) { status.innerText = "Gagal mengirim. Coba lagi."; status.className = "p-3 rounded-xl text-center text-xs font-semibold bg-red-50 text-red-700 block"; }
             finally { btn.disabled=false; btn.innerHTML = `<i class="fas fa-paper-plane text-[10px]"></i> Kirim Pesan`; }
         }
-
+        
         function playVideo(id) { document.getElementById('video-selection').classList.add('hidden'); document.getElementById('video-player').classList.remove('hidden'); document.getElementById('iframe-video').src = `https://www.youtube.com/embed/${id}?autoplay=1`; }
         function backToSelection() { document.getElementById('video-selection').classList.remove('hidden'); document.getElementById('video-player').classList.add('hidden'); document.getElementById('iframe-video').src = ''; }
         function closeModal() { backToSelection(); toggleModal('modal-video'); document.body.style.overflow = ''; }
-
+        
         document.querySelectorAll('.fixed.inset-0.bg-black\\/70').forEach(m => m.addEventListener('click', function(e){ if(e.target===m) { if(m.id==='modal-anonim') closeAnonimModal(); else if(m.id==='modal-video') closeModal(); else if(m.id==='modal-crypto') { toggleModal('modal-crypto'); stopMarketUpdater(); document.body.style.overflow=''; } else if(m.id==='modal-news') closeNewsModal(); else if(m.id==='modal-stats') closeStatsModal(); } }));
     </script>
 </body>
